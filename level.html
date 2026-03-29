@@ -24,20 +24,22 @@ body {
 }
 .nav .left { font-weight: bold; color:#58a6ff; }
 .nav .right a { margin-left:20px; text-decoration:none; color:#c9d1d9; }
+.nav .right a.active { background:#2b3240; padding:6px 10px; border-radius:6px; }
 
-/* Header */
+/* HEADER */
 .header {
     text-align: center;
-    padding: 40px 20px;
+    padding: 30px 20px;
 }
 .header h1 { font-size:42px; margin:0; }
 .header p { color:#8b949e; }
 
-/* Level content wrapper */
+/* LEVEL CONTENT */
 .container {
     max-width: 900px;
-    margin: auto;
+    margin: 0 auto 50px auto;
     padding: 20px;
+    text-align: center;
 }
 
 /* Title & creator */
@@ -56,6 +58,7 @@ body {
 /* Video */
 .video {
     width: 100%;
+    max-width: 800px;
     height: 480px;
     border-radius: 10px;
     border: none;
@@ -63,14 +66,31 @@ body {
 }
 
 /* Sections */
-.section { margin-bottom: 30px; text-align: left; }
-.section h3 { font-size: 18px; margin-bottom: 10px; color: #79c0ff; }
+.section {
+    margin-bottom: 30px;
+    text-align: left;
+}
+.section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #79c0ff;
+}
 
 /* Stats */
-.stat { color: #c9d1d9; margin: 4px 0; }
+.stat {
+    color: #c9d1d9;
+    margin: 4px 0;
+}
 
 /* Tags */
-.tag { display: inline-block; background: #8b1e1e; padding: 5px 12px; border-radius: 999px; font-size: 13px; margin: 3px 3px 3px 0; }
+.tag {
+    display: inline-block;
+    background: #8b1e1e;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    margin: 3px 3px 3px 0;
+}
 </style>
 </head>
 <body>
@@ -80,6 +100,10 @@ body {
     <div class="left"><a href="index.html">Mario's Custom Demonlist</a></div>
     <div class="right">
         <a href="index.html">Main List</a>
+        <a href="#">Extended</a>
+        <a href="#">Legacy</a>
+        <a href="#">Leaderboard</a>
+        <a href="#">Submit</a>
     </div>
 </div>
 
@@ -115,36 +139,33 @@ body {
 
 <script>
 // 🔹 Level data
-const levels = [
-    {
-        id: 1,
-        title: "1. fucking level",
-        creator: "kanye idk",
-        thumbnail: "simpsion.jpeg",
-        video: "zDjpcmvZbTM", // YouTube ID
+const levels = {
+    1: {
+        title: "#1 smohcs",
+        creator: "durianhead",
+        video: "dQw4w9WgXcQ",
         points: 250,
         position: 1,
-        difficulty: "demon insert here",
-        tags: ["a TAG WOW"],
-        description: "description."
+        difficulty: "Insane Demon",
+        tags: ["Top Pack", "Favorites", "Slow Pack"],
+        description: "This is a top difficulty insane demon known for its complex gameplay and high skill requirement."
     },
-    {
-        id: 2,
-        title: "2. another level",
-        creator: "someone else",
-        thumbnail: "simpsion2.jpeg",
-        video: "ANOTHER_VIDEO_ID",
+    2: {
+        title: "#2 another level",
+        creator: "someoneelse",
+        video: "VIDEO_ID",
         points: 200,
         position: 2,
-        difficulty: "hard demon",
+        difficulty: "Insane Demon",
         tags: ["Favorites", "Demon"],
-        description: "Another description."
+        description: "Another insane demon level."
     }
-];
+    // Add more levels here
+};
 
-// 🔹 Get level ID from URL
+// 🔹 Get level ID from URL and convert to number
 const params = new URLSearchParams(window.location.search);
-const levelId = params.get('level');
+const levelId = Number(params.get('level')); // <-- important fix
 const level = levels[levelId];
 
 // 🔹 Load level data
