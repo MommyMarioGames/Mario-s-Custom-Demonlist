@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>level browser should show a level...</title>
+<title>Level Browser</title>
 
 <style>
 body {
@@ -14,8 +14,6 @@ body {
     padding: 0;
     text-align: center;
 }
-
-/* NAV */
 .nav {
     display: flex;
     justify-content: space-between;
@@ -25,77 +23,21 @@ body {
 .nav .left { font-weight: bold; color:#58a6ff; }
 .nav .right a { margin-left:20px; text-decoration:none; color:#c9d1d9; }
 .nav .right a.active { background:#2b3240; padding:6px 10px; border-radius:6px; }
-
-/* HEADER */
-.header {
-    text-align: center;
-    padding: 30px 20px;
-}
+.header { text-align: center; padding: 30px 20px; }
 .header h1 { font-size:42px; margin:0; }
 .header p { color:#8b949e; }
-
-/* LEVEL CONTENT */
-.container {
-    max-width: 900px;
-    margin: 0 auto 50px auto;
-    padding: 20px;
-    text-align: center;
-}
-
-/* Title & creator */
-.title {
-    font-size: 36px;
-    font-weight: bold;
-    color: #79c0ff;
-    margin-bottom: 5px;
-}
-.creator {
-    font-size: 16px;
-    color: #8b949e;
-    margin-bottom: 20px;
-}
-
-/* Video */
-.video {
-    width: 100%;
-    max-width: 800px;
-    height: 480px;
-    border-radius: 10px;
-    border: none;
-    margin-bottom: 30px;
-}
-
-/* Sections */
-.section {
-    margin-bottom: 30px;
-    text-align: left;
-}
-.section h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #79c0ff;
-}
-
-/* Stats */
-.stat {
-    color: #c9d1d9;
-    margin: 4px 0;
-}
-
-/* Tags */
-.tag {
-    display: inline-block;
-    background: #8b1e1e;
-    padding: 5px 12px;
-    border-radius: 999px;
-    font-size: 13px;
-    margin: 3px 3px 3px 0;
-}
+.container { max-width: 900px; margin: 0 auto 50px auto; padding: 20px; text-align: center; }
+.title { font-size: 36px; font-weight: bold; color: #79c0ff; margin-bottom: 5px; }
+.creator { font-size:16px; color:#8b949e; margin-bottom:20px; }
+.video { width:100%; max-width:800px; height:480px; border-radius:10px; border:none; margin-bottom:30px; }
+.section { margin-bottom:30px; text-align:left; }
+.section h3 { font-size:18px; margin-bottom:10px; color:#79c0ff; }
+.stat { color:#c9d1d9; margin:4px 0; }
+.tag { display:inline-block; background:#8b1e1e; padding:5px 12px; border-radius:999px; font-size:13px; margin:3px 3px 3px 0; }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <div class="nav">
     <div class="left"><a href="index.html">Mario's Custom Demonlist</a></div>
     <div class="right">
@@ -107,13 +49,11 @@ body {
     </div>
 </div>
 
-<!-- HEADER -->
 <div class="header">
     <h1>Level Info</h1>
     <p>you should see a demon here...</p>
 </div>
 
-<!-- LEVEL CONTENT -->
 <div class="container">
     <div class="title" id="levelTitle"></div>
     <div class="creator" id="levelCreator"></div>
@@ -137,10 +77,12 @@ body {
     </div>
 </div>
 
-<script src="levels.js">
+<!-- Load the shared level data -->
+<script src="levels.js"></script>
 
-// this should show the fucking level
-    const params = new URLSearchParams(window.location.search);
+<!-- Use the level data to populate the page -->
+<script>
+const params = new URLSearchParams(window.location.search);
 const levelId = Number(params.get('level'));
 const level = levels.find(l => l.id === levelId);
 
@@ -156,7 +98,6 @@ if(level) {
 } else {
     document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Level not found</h2>";
 }
-    
 </script>
 
 </body>
