@@ -8,7 +8,7 @@
 <style>
 body {
     margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: "Comic Sans MS", Arial, sans-serif;
     background: #0b0f14;
     color: #e6edf3;
 }
@@ -20,18 +20,15 @@ body {
     padding: 15px 30px;
     border-bottom: 1px solid #1f2933;
 }
-
 .nav .left {
     font-weight: bold;
     color: #58a6ff;
 }
-
 .nav .right a {
     margin-left: 20px;
     text-decoration: none;
     color: #c9d1d9;
 }
-
 .nav .right a.active {
     background: #2b3240;
     padding: 6px 10px;
@@ -43,11 +40,9 @@ body {
     text-align: center;
     padding: 40px 20px;
 }
-
 .header h1 {
     font-size: 42px;
 }
-
 .header p {
     color: #8b949e;
 }
@@ -58,7 +53,6 @@ body {
     margin: auto;
     padding: 20px;
 }
-
 .card {
     display: flex;
     background: #11161c;
@@ -66,34 +60,28 @@ body {
     border-radius: 10px;
     margin-bottom: 20px;
     overflow: hidden;
-    cursor: pointer; /* indicates clickable */
+    cursor: pointer;
 }
-
 .thumbnail {
     width: 220px;
     height: 120px;
     background: #222;
 }
-
 .content {
     padding: 15px;
     flex: 1;
 }
-
 .title {
     font-size: 20px;
     color: #79c0ff;
 }
-
 .points {
     font-size: 14px;
     color: #8b949e;
 }
-
 .tags {
     margin-top: 10px;
 }
-
 .tag {
     display: inline-block;
     background: #8b1e1e;
@@ -103,11 +91,9 @@ body {
     font-size: 12px;
     margin: 3px;
 }
-
 .tag.gray {
     background: #444c56;
 }
-
 .weekly {
     margin-top: 10px;
     font-size: 12px;
@@ -118,7 +104,6 @@ body {
     .card {
         flex-direction: column;
     }
-
     .thumbnail {
         width: 100%;
     }
@@ -144,30 +129,23 @@ body {
     <p>WOW THE MAIN LIST NO WAY!!!</p>
 </div>
 
-<div class="list" id="levelList">
-</div>
+<div class="list" id="levelList"></div>
 
 <script>
-// 🔹 Your level data
+// uhhh level properties
 const levels = [
     {
         id: 1,
         title: "1. fucking level",
-        creator: "Durianhead",
+        creator: "kanye idk",
         thumbnail: "simpsion.jpeg",
-        points: 250,
-        tags: ["a TAG WOW"]
+        video: "zDjpcmvZbTM", // YouTube ID
+        points: points,
+        position: 1,
+        difficulty: "demon inersert here",
+        tags: ["a TAG WOW"],
+        description: "description."
     },
-    {
-        id: 2,
-        title: "2. another level",
-        creator: "Someone Else",
-        thumbnail: "simpsion2.jpeg",
-        points: 200,
-        tags: ["Favorites", "Demon"]
-    }
-    // Add more levels here
-];
 
 // 🔹 Dynamically create cards
 const levelList = document.getElementById('levelList');
@@ -175,7 +153,7 @@ const levelList = document.getElementById('levelList');
 levels.forEach(level => {
     const card = document.createElement('div');
     card.className = 'card';
-    
+
     // Click opens dynamic level.html with the level ID
     card.onclick = () => {
         window.location.href = `level.html?level=${level.id}`;
