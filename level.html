@@ -137,44 +137,13 @@ body {
     </div>
 </div>
 
-<script>
-// 🔹 Level data
-const levels = [
-    {
-        id: 1,
-        title: "1. fucking level",
-        creator: "kanye idk",
-        thumbnail: "simpsion.jpeg",
-        video: "zDjpcmvZbTM", // YouTube ID
-        points: 250,
-        position: 1,
-        difficulty: "demon insert here",
-        tags: ["a TAG WOW"],
-        description: "description."
-    },
-    {
-        id: 2,
-        title: "2. another level",
-        creator: "travis scoot",
-        thumbnail: "images/IMG_2258.PNG",
-        video: "glfUnq0rXso",
-        points: 200,
-        position: 2,
-        difficulty: "flightreacts difficulty",
-        tags: ["flight", "reacts"],
-        description: "hey wait is this kanye again?."
-    }
-];
+<script src="levels.js">
 
-
-// 🔹 Get level ID from URL
-const params = new URLSearchParams(window.location.search);
+// this should show the fucking level
+    const params = new URLSearchParams(window.location.search);
 const levelId = Number(params.get('level'));
-
-// 🔹 Find the level by its ID
 const level = levels.find(l => l.id === levelId);
 
-// 🔹 Load level data
 if(level) {
     document.getElementById('levelTitle').innerText = level.title;
     document.getElementById('levelCreator').innerText = `by ${level.creator}`;
@@ -187,6 +156,7 @@ if(level) {
 } else {
     document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Level not found</h2>";
 }
+    
 </script>
 
 </body>
