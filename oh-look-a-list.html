@@ -50,12 +50,13 @@ body {
 </div>
 
 <div class="list" id="levelList"></div>
-    
-    <script src="levels.js">
 
-        // this should generate levels if not im fucking stupid 
-        
-        const levelList = document.getElementById('levelList');
+<!-- DATA NOM NOM NOM AHHHHHHHHHHH MORE DATA -->
+<script src="levels.js"></script>
+
+<!-- this should generate the fucking cards -->
+<script>
+const levelList = document.getElementById('levelList');
 
 levels.forEach(level => {
     const card = document.createElement('div');
@@ -72,7 +73,8 @@ levels.forEach(level => {
         </div>
     `;
     levelList.appendChild(card);
-});        
-    </script>
+});
+</script>
+
 </body>
 </html>
