@@ -12,102 +12,22 @@ body {
     background: #0b0f14;
     color: #e6edf3;
 }
-
-/* NAV */
-.nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 30px;
-    border-bottom: 1px solid #1f2933;
-}
-.nav .left {
-    font-weight: bold;
-    color: #58a6ff;
-}
-.nav .right a {
-    margin-left: 20px;
-    text-decoration: none;
-    color: #c9d1d9;
-}
-.nav .right a.active {
-    background: #2b3240;
-    padding: 6px 10px;
-    border-radius: 6px;
-}
-
-/* TITLE */
-.header {
-    text-align: center;
-    padding: 40px 20px;
-}
-.header h1 {
-    font-size: 42px;
-}
-.header p {
-    color: #8b949e;
-}
-
-/* LIST */
-.list {
-    max-width: 1100px;
-    margin: auto;
-    padding: 20px;
-}
-.card {
-    display: flex;
-    background: #11161c;
-    border: 1px solid #1f2933;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    overflow: hidden;
-    cursor: pointer;
-}
-.thumbnail {
-    width: 220px;
-    height: 120px;
-    background: #222;
-}
-.content {
-    padding: 15px;
-    flex: 1;
-}
-.title {
-    font-size: 20px;
-    color: #79c0ff;
-}
-.points {
-    font-size: 14px;
-    color: #8b949e;
-}
-.tags {
-    margin-top: 10px;
-}
-.tag {
-    display: inline-block;
-    background: #8b1e1e;
-    color: white;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    margin: 3px;
-}
-.tag.gray {
-    background: #444c56;
-}
-.weekly {
-    margin-top: 10px;
-    font-size: 12px;
-    color: #8b949e;
-}
-
-@media (max-width: 800px) {
-    .card {
-        flex-direction: column;
-    }
-    .thumbnail {
-        width: 100%;
-    }
-}
+.nav { display:flex; justify-content:space-between; padding:15px 30px; border-bottom:1px solid #1f2933; }
+.nav .left { font-weight:bold; color:#58a6ff; }
+.nav .right a { margin-left:20px; text-decoration:none; color:#c9d1d9; }
+.nav .right a.active { background:#2b3240; padding:6px 10px; border-radius:6px; }
+.header { text-align:center; padding:40px 20px; }
+.header h1 { font-size:42px; }
+.header p { color:#8b949e; }
+.list { max-width:1100px; margin:auto; padding:20px; }
+.card { display:flex; background:#11161c; border:1px solid #1f2933; border-radius:10px; margin-bottom:20px; overflow:hidden; cursor:pointer; }
+.thumbnail { width:220px; height:120px; background:#222; }
+.content { padding:15px; flex:1; }
+.title { font-size:20px; color:#79c0ff; }
+.points { font-size:14px; color:#8b949e; }
+.tags { margin-top:10px; }
+.tag { display:inline-block; background:#8b1e1e; color:white; padding:4px 10px; border-radius:999px; font-size:12px; margin:3px; }
+@media (max-width:800px){ .card{ flex-direction:column; } .thumbnail{ width:100%; } }
 </style>
 </head>
 
@@ -132,7 +52,7 @@ body {
 <div class="list" id="levelList"></div>
 
 <script>
-// uhhh level properties
+// 🔹 Level data
 const levels = [
     {
         id: 1,
@@ -140,12 +60,25 @@ const levels = [
         creator: "kanye idk",
         thumbnail: "simpsion.jpeg",
         video: "zDjpcmvZbTM", // YouTube ID
-        points: points,
+        points: 250,
         position: 1,
-        difficulty: "demon inersert here",
+        difficulty: "demon insert here",
         tags: ["a TAG WOW"],
         description: "description."
     },
+    {
+        id: 2,
+        title: "2. another level",
+        creator: "someone else",
+        thumbnail: "simpsion2.jpeg",
+        video: "ANOTHER_VIDEO_ID",
+        points: 200,
+        position: 2,
+        difficulty: "hard demon",
+        tags: ["Favorites", "Demon"],
+        description: "Another description."
+    }
+];
 
 // 🔹 Dynamically create cards
 const levelList = document.getElementById('levelList');
@@ -160,7 +93,7 @@ levels.forEach(level => {
     }
 
     card.innerHTML = `
-        <img class="thumbnail" src="${level.thumbnail}">
+        <img class="thumbnail" src="${level.thumbnail}" alt="${level.title}">
         <div class="content">
             <div class="title">${level.title}</div>
             <div class="points">Points: ${level.points}</div>
