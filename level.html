@@ -97,9 +97,9 @@ body {
 
 <!-- NAV -->
 <div class="nav">
-    <div class="left"><a href="index.html">Mario's Custom Demonlist</a></div>
+    <div class="left"><a href="oh-look-a-list.html">Mario's Custom Demonlist</a></div>
     <div class="right">
-        <a href="index.html">Main List</a>
+        <a href="main.html">Main List</a>
         <a href="#">Extended</a>
         <a href="#">Legacy</a>
         <a href="#">Leaderboard</a>
@@ -145,7 +145,7 @@ const levels = [
         title: "1. fucking level",
         creator: "kanye idk",
         thumbnail: "simpsion.jpeg",
-        video: "zDjpcmvZbTM", // YouTube ID
+        video: "zDjpcmvZbTM",
         points: 250,
         position: 1,
         difficulty: "demon insert here",
@@ -166,10 +166,12 @@ const levels = [
     }
 ];
 
-// 🔹 Get level ID from URL and convert to number
+// 🔹 Get level ID from URL
 const params = new URLSearchParams(window.location.search);
-const levelId = Number(params.get('level')); // <-- important fix
-const level = levels[levelId];
+const levelId = Number(params.get('level'));
+
+// 🔹 Find the level by its ID
+const level = levels.find(l => l.id === levelId);
 
 // 🔹 Load level data
 if(level) {
