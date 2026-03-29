@@ -11,6 +11,32 @@ body {
     color: #e6edf3;
     font-family: "Comic Sans MS", Arial, sans-serif;
     margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* NAV */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-bottom: 1px solid #1f2933;
+}
+.nav .left { font-weight: bold; color:#58a6ff; }
+.nav .right a { margin-left:20px; text-decoration:none; color:#c9d1d9; }
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 40px 20px;
+}
+.header h1 { font-size:42px; margin:0; }
+.header p { color:#8b949e; }
+
+/* Level content wrapper */
+.container {
+    max-width: 900px;
+    margin: auto;
     padding: 20px;
 }
 
@@ -37,82 +63,84 @@ body {
 }
 
 /* Sections */
-.section {
-    margin-bottom: 30px;
-}
-
-.section h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #79c0ff;
-}
+.section { margin-bottom: 30px; text-align: left; }
+.section h3 { font-size: 18px; margin-bottom: 10px; color: #79c0ff; }
 
 /* Stats */
-.stat {
-    color: #c9d1d9;
-    margin: 4px 0;
-}
+.stat { color: #c9d1d9; margin: 4px 0; }
 
 /* Tags */
-.tag {
-    display: inline-block;
-    background: #8b1e1e;
-    padding: 5px 12px;
-    border-radius: 999px;
-    font-size: 13px;
-    margin: 3px 3px 3px 0;
-}
+.tag { display: inline-block; background: #8b1e1e; padding: 5px 12px; border-radius: 999px; font-size: 13px; margin: 3px 3px 3px 0; }
 </style>
 </head>
 <body>
 
-<div class="title" id="levelTitle"></div>
-<div class="creator" id="levelCreator"></div>
-
-<iframe class="video" id="levelVideo"></iframe>
-
-<div class="section">
-    <h3>Stats</h3>
-    <div class="stat" id="levelPoints"></div>
-    <div class="stat" id="levelPosition"></div>
-    <div class="stat" id="levelDifficulty"></div>
+<!-- NAV -->
+<div class="nav">
+    <div class="left"><a href="index.html">Mario's Custom Demonlist</a></div>
+    <div class="right">
+        <a href="index.html">Main List</a>
+    </div>
 </div>
 
-<div class="section">
-    <h3>Packs / Tags</h3>
-    <div id="levelTags"></div>
+<!-- HEADER -->
+<div class="header">
+    <h1>Level Info</h1>
+    <p>Check out this insane demon!</p>
 </div>
 
-<div class="section">
-    <h3>Description</h3>
-    <div id="levelDescription"></div>
+<!-- LEVEL CONTENT -->
+<div class="container">
+    <div class="title" id="levelTitle"></div>
+    <div class="creator" id="levelCreator"></div>
+    <iframe class="video" id="levelVideo" allowfullscreen></iframe>
+
+    <div class="section">
+        <h3>Stats</h3>
+        <div class="stat" id="levelPoints"></div>
+        <div class="stat" id="levelPosition"></div>
+        <div class="stat" id="levelDifficulty"></div>
+    </div>
+
+    <div class="section">
+        <h3>Packs / Tags</h3>
+        <div id="levelTags"></div>
+    </div>
+
+    <div class="section">
+        <h3>Description</h3>
+        <div id="levelDescription"></div>
+    </div>
 </div>
 
 <script>
 // 🔹 Level data
-const levels = {
-    1: {
-        title: "#1 smohcs",
-        creator: "durianhead",
-        video: "dQw4w9WgXcQ",
+const levels = [
+    {
+        id: 1,
+        title: "1. fucking level",
+        creator: "kanye idk",
+        thumbnail: "simpsion.jpeg",
+        video: "zDjpcmvZbTM", // YouTube ID
         points: 250,
         position: 1,
-        difficulty: "Insane Demon",
-        tags: ["Top Pack", "Favorites", "Slow Pack"],
-        description: "This is a top difficulty insane demon known for its complex gameplay and high skill requirement."
+        difficulty: "demon insert here",
+        tags: ["a TAG WOW"],
+        description: "description."
     },
-    2: {
-        title: "#2 another level",
-        creator: "someoneelse",
-        video: "VIDEO_ID",
+    {
+        id: 2,
+        title: "2. another level",
+        creator: "someone else",
+        thumbnail: "simpsion2.jpeg",
+        video: "ANOTHER_VIDEO_ID",
         points: 200,
         position: 2,
-        difficulty: "Insane Demon",
+        difficulty: "hard demon",
         tags: ["Favorites", "Demon"],
-        description: "Another insane demon level."
+        description: "Another description."
     }
-    // add more levels here
-};
+];
 
 // 🔹 Get level ID from URL
 const params = new URLSearchParams(window.location.search);
@@ -130,7 +158,7 @@ if(level) {
     document.getElementById('levelTags').innerHTML = level.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
     document.getElementById('levelDescription').innerText = level.description;
 } else {
-    document.body.innerHTML = "<h2>Level not found</h2>";
+    document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Level not found</h2>";
 }
 </script>
 
