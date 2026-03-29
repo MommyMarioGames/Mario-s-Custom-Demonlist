@@ -50,50 +50,19 @@ body {
 </div>
 
 <div class="list" id="levelList"></div>
+    
+    <script src="levels.js">
 
-<script>
-// 🔹 Level data
-const levels = [
-    {
-        id: 1,
-        title: "1. fucking level",
-        creator: "kanye idk",
-        thumbnail: "simpsion.jpeg",
-        video: "zDjpcmvZbTM", // YouTube ID
-        points: 250,
-        position: 1,
-        difficulty: "demon insert here",
-        tags: ["a TAG WOW"],
-        description: "description."
-    },
-    {
-        id: 2,
-        title: "2. another level",
-        creator: "travis scoot",
-        thumbnail: "images/IMG_2258.PNG",
-        video: "glfUnq0rXso",
-        points: 200,
-        position: 2,
-        difficulty: "flightreacts difficulty",
-        tags: ["flight", "reacts"],
-        description: "hey wait is this kanye again?."
-    }
-];
-
-// 🔹 Dynamically create cards
-const levelList = document.getElementById('levelList');
+        // this should generate levels if not im fucking stupid 
+        
+        const levelList = document.getElementById('levelList');
 
 levels.forEach(level => {
     const card = document.createElement('div');
     card.className = 'card';
-
-    // Click opens dynamic level.html with the level ID
-    card.onclick = () => {
-        window.location.href = `level.html?level=${level.id}`;
-    }
-
+    card.onclick = () => window.location.href = `level.html?level=${level.id}`;
     card.innerHTML = `
-        <img class="thumbnail" src="${level.thumbnail}" alt="${level.title}">
+        <img class="thumbnail" src="${level.thumbnail}">
         <div class="content">
             <div class="title">${level.title}</div>
             <div class="points">Points: ${level.points}</div>
@@ -102,10 +71,8 @@ levels.forEach(level => {
             </div>
         </div>
     `;
-
     levelList.appendChild(card);
-});
-</script>
-
+});        
+    </script>
 </body>
 </html>
