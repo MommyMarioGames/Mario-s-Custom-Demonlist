@@ -1,22 +1,180 @@
-<h1>Mario's Custom Demonlist</h1>
-
-<h2>A demonlist based on Medium, Easy, and Hard Demons all in one.</h2>
-
-<div id="headerArea">
-        <nav id="navbar">
-          <ul>
-            <li><a href="index.html">hi</a></li>
-          </ul>
-        </nav>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insane Demon List</title>
 
 <style>
-        /* navigation section!! */
-            #navbar {
-                height: 40px;
-                background-color: #140000;
-                /* navbar color */
-                width: 100%;
-            }
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #0b0f14;
+    color: #e6edf3;
+}
 
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    border-bottom: 1px solid #1f2933;
+}
+
+.navbar .logo {
+    font-weight: bold;
+    color: #58a6ff;
+}
+
+.navbar a {
+    color: #c9d1d9;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 14px;
+}
+
+.navbar a:hover {
+    color: #58a6ff;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    font-weight: 600;
+}
+
+.hero p {
+    color: #8b949e;
+    margin-top: 10px;
+}
+
+/* MAIN LAYOUT */
+.container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* RULES */
+.rules h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.rules p {
+    color: #c9d1d9;
+    line-height: 1.6;
+}
+
+.rules ul {
+    margin-top: 15px;
+    padding-left: 20px;
+}
+
+.rules li {
+    margin-bottom: 10px;
+    color: #c9d1d9;
+}
+
+/* SIDEBAR */
+.sidebar h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    background: #11161c;
+    border: 1px solid #1f2933;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #333;
+    margin-right: 10px;
+}
+
+.name {
+    font-size: 14px;
+}
+
+.sub {
+    font-size: 12px;
+    color: #8b949e;
+}
+
+@media (max-width: 900px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}
 </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="logo">Mario's Custom Demonlist</div>
+    <div>
+        <a href="#">Main List</a>
+        <a href="#">Extended</a>
+        <a href="#">Legacy</a>
+        <a href="#">Leaderboard</a>
+        <a href="#">Submit</a>
+    </div>
+</div>
+
+<div class="hero">
+    <h1>Mario's Custom Demonlist</h1>
+    <p>My very own demonlist which combines demons from every difficulty for fun.</p>
+</div>
+
+<div class="container">
+
+    <!-- LEFT -->
+    <div class="rules">
+        <h2>Rules</h2>
+        <p>Good question</p>
+
+        <ul>
+            <li>Levels are put on the main list if rated.</li>
+            <li>Of course UPLOAD YOUR COMPLETION!!</li>
+            <li>No duplicate submissions</li>
+            <li>Don't hack. </li>
+            <li>Raw footage is optional but recommended</li>
+            <li>Live streams have a low chance of being accepted.</li>
+        </ul>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="sidegoon">
+
+        <h3>List People</h3>
+            <p>People who run the list!</p>
+        <div class="card">
+            <div class="avatar"><img src="https://cdn.discordapp.com/avatars/651976169759047700/870ec1b76c014b132ae4bbca314cde2a.webp?size=1024"></img></div>
+            <div>
+                <div class="name">Mario</div>
+                <div class="sub">mariogames</div>
+            </div>
+        </div>
+
+</div>
+
+</body>
+</html>
