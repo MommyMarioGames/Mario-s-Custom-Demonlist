@@ -66,6 +66,7 @@ body {
     border-radius: 10px;
     margin-bottom: 20px;
     overflow: hidden;
+    cursor: pointer; /* indicates clickable */
 }
 
 .thumbnail {
@@ -143,21 +144,57 @@ body {
     <p>WOW THE MAIN LIST NO WAY!!!</p>
 </div>
 
-<div class="list">
+<div class="list" id="levelList">
+</div>
 
-    <div class="card">
-        <img class="thumbnail" src="simpsion.jpeg">
+<script>
+// 🔹 Your level data
+const levels = [
+    {
+        id: 1,
+        title: "1. fucking level",
+        creator: "Durianhead",
+        thumbnail: "simpsion.jpeg",
+        points: 250,
+        tags: ["a TAG WOW"]
+    },
+    {
+        id: 2,
+        title: "2. another level",
+        creator: "Someone Else",
+        thumbnail: "simpsion2.jpeg",
+        points: 200,
+        tags: ["Favorites", "Demon"]
+    }
+    // Add more levels here
+];
+
+// 🔹 Dynamically create cards
+const levelList = document.getElementById('levelList');
+
+levels.forEach(level => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    
+    // Click opens dynamic level.html with the level ID
+    card.onclick = () => {
+        window.location.href = `level.html?level=${level.id}`;
+    }
+
+    card.innerHTML = `
+        <img class="thumbnail" src="${level.thumbnail}">
         <div class="content">
-            <div class="title">1. fucking level</div>
-            <div class="points">insert points</div>
-
+            <div class="title">${level.title}</div>
+            <div class="points">Points: ${level.points}</div>
             <div class="tags">
-                <span class="tag">a TAG WOW</span>
+                ${level.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
             </div>
         </div>
-    </div>
+    `;
 
-</div>
+    levelList.appendChild(card);
+});
+</script>
 
 </body>
 </html>
