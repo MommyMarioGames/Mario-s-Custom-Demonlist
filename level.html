@@ -139,29 +139,32 @@ body {
 
 <script>
 // 🔹 Level data
-const levels = {
-    1: {
-        title: "#1 smohcs",
-        creator: "durianhead",
-        video: "dQw4w9WgXcQ",
+const levels = [
+    {
+        id: 1,
+        title: "1. fucking level",
+        creator: "kanye idk",
+        thumbnail: "simpsion.jpeg",
+        video: "zDjpcmvZbTM", // YouTube ID
         points: 250,
         position: 1,
-        difficulty: "Insane Demon",
-        tags: ["Top Pack", "Favorites", "Slow Pack"],
-        description: "This is a top difficulty insane demon known for its complex gameplay and high skill requirement."
+        difficulty: "demon insert here",
+        tags: ["a TAG WOW"],
+        description: "description."
     },
-    2: {
-        title: "#2 another level",
-        creator: "someoneelse",
-        video: "VIDEO_ID",
+    {
+        id: 2,
+        title: "2. another level",
+        creator: "someone else",
+        thumbnail: "simpsion2.jpeg",
+        video: "ANOTHER_VIDEO_ID",
         points: 200,
         position: 2,
-        difficulty: "Insane Demon",
+        difficulty: "hard demon",
         tags: ["Favorites", "Demon"],
-        description: "Another insane demon level."
+        description: "Another description."
     }
-    // Add more levels here
-};
+];
 
 // 🔹 Get level ID from URL and convert to number
 const params = new URLSearchParams(window.location.search);
