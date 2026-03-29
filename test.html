@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level</title>
+
+<style>
+body {
+    background: #0b0f14;
+    color: #e6edf3;
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Title & creator */
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #79c0ff;
+    margin-bottom: 5px;
+}
+.creator {
+    font-size: 16px;
+    color: #8b949e;
+    margin-bottom: 20px;
+}
+
+/* Video */
+.video {
+    width: 100%;
+    height: 480px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 30px;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 30px;
+}
+
+.section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #79c0ff;
+}
+
+/* Stats */
+.stat {
+    color: #c9d1d9;
+    margin: 4px 0;
+}
+
+/* Tags */
+.tag {
+    display: inline-block;
+    background: #8b1e1e;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    margin: 3px 3px 3px 0;
+}
+</style>
+</head>
+<body>
+
+<div class="title" id="levelTitle"></div>
+<div class="creator" id="levelCreator"></div>
+
+<iframe class="video" id="levelVideo"></iframe>
+
+<div class="section">
+    <h3>Stats</h3>
+    <div class="stat" id="levelPoints"></div>
+    <div class="stat" id="levelPosition"></div>
+    <div class="stat" id="levelDifficulty"></div>
+</div>
+
+<div class="section">
+    <h3>Packs / Tags</h3>
+    <div id="levelTags"></div>
+</div>
+
+<div class="section">
+    <h3>Description</h3>
+    <div id="levelDescription"></div>
+</div>
+
+<script>
+// 🔹 Level data
+const levels = {
+    1: {
+        title: "#1 smohcs",
+        creator: "durianhead",
+        video: "dQw4w9WgXcQ",
+        points: 250,
+        position: 1,
+        difficulty: "Insane Demon",
+        tags: ["Top Pack", "Favorites", "Slow Pack"],
+        description: "This is a top difficulty insane demon known for its complex gameplay and high skill requirement."
+    },
+    2: {
+        title: "#2 another level",
+        creator: "someoneelse",
+        video: "VIDEO_ID",
+        points: 200,
+        position: 2,
+        difficulty: "Insane Demon",
+        tags: ["Favorites", "Demon"],
+        description: "Another insane demon level."
+    }
+    // add more levels here
+};
+
+// 🔹 Get level ID from URL
+const params = new URLSearchParams(window.location.search);
+const levelId = params.get('level');
+const level = levels[levelId];
+
+// 🔹 Load level data
+if(level) {
+    document.getElementById('levelTitle').innerText = level.title;
+    document.getElementById('levelCreator').innerText = `by ${level.creator}`;
+    document.getElementById('levelVideo').src = `https://www.youtube.com/embed/${level.video}`;
+    document.getElementById('levelPoints').innerText = `Points: ${level.points}`;
+    document.getElementById('levelPosition').innerText = `Position: ${level.position}`;
+    document.getElementById('levelDifficulty').innerText = `Difficulty: ${level.difficulty}`;
+    document.getElementById('levelTags').innerHTML = level.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+    document.getElementById('levelDescription').innerText = level.description;
+} else {
+    document.body.innerHTML = "<h2>Level not found</h2>";
+}
+</script>
+
+</body>
+</html>
