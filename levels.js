@@ -9,18 +9,18 @@ window.levels = [
         position: 1,
         difficulty: "Hard Demon",
         tags: ["Limbo Inspired"],
-        description: "description."
+        description: "Is this what Limbo would look like if RobTop made it? | My last level for 2.1, enjoy! | OG from Muplan's video: "What if RobTop made Limbo"."
     },
     {
         id: 2,
-        title: "2. placeholder",
-        creator: "placeholder",
+        title: "2. Ruta del Sol",
+        creator: "TroxxP1",
         thumbnail: "images/83323273.webp",
-        video: "QrGrOK8oZG8",
+        video: "X9EDM90XBFI",
         points: 200,
         position: 2,
-        difficulty: "difficulty",
-        tags: ["yes", "bad"],
-        description: "placeholder."
+        difficulty: "Easy Demon",
+        tags: ["Mario Can't See",],
+        description: "[Peruvian WGC entry - 1st place] - [creators: TroxxP1, iThunder12, PlantPoint, Aquaerum & Polli]"
     }
 ];
