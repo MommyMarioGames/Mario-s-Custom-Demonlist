@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Player Info</title>
-
 <style>
 body {
     margin: 0;
@@ -22,8 +21,8 @@ body {
 .nav .right a.active { background:#2b3240; padding:6px 10px; border-radius:6px; }
 
 .header { padding:40px 20px; }
-.header h1 { font-size:42px; margin:0; }
-.header p { color:#8b949e; }
+.header h1 { font-size:42px; margin:0; display:flex; align-items:center; justify-content:center; }
+.flag { width:32px; height:20px; margin-left:12px; border-radius:4px; object-fit:cover; vertical-align:middle; }
 
 .container { max-width:800px; margin:0 auto; padding:20px; text-align:center; }
 .playerInfo { margin-bottom:30px; }
@@ -38,6 +37,8 @@ body {
 .completions h3 { color:#79c0ff; margin-bottom:6px; }
 .completions ul { list-style:none; padding-left:0; }
 .completions li { background:#11161c; padding:8px 12px; margin-bottom:5px; border-radius:8px; border:1px solid #1f2933; }
+.completions li a { color:#58a6ff; text-decoration:none; }
+.completions li a:hover { text-decoration:underline; }
 </style>
 </head>
 <body>
@@ -48,13 +49,14 @@ body {
         <a href="main.html">Main List</a>
         <a href="extended.html">Extended</a>
         <a href="legacy.html">Legacy</a>
-        <a class="active" href="#">Leaderboard</a>
+        <a class="active" href="leaderboard.html">Leaderboard</a>
         <a href="#">Submit</a>
     </div>
 </div>
 
 <div class="header">
     <h1 id="playerName">Player Name</h1>
+    <img id="playerFlag" class="flag" src="https://via.placeholder.com/32x20?text=?" title="Unknown">
 </div>
 
 <div class="container playerInfo">
@@ -100,25 +102,34 @@ function renderPlayer() {
         return;
     }
 
+    // Player basic info
     document.getElementById("playerName").innerText = player.username;
     document.getElementById("playerRank").innerText = `Rank: ${player.rank}`;
     document.getElementById("playerPoints").innerText = `Points: ${player.points}`;
 
-    // YouTube placeholder
+    // Player flag
+    const flagEl = document.getElementById("playerFlag");
+    if (player.countryCode) {
+        flagEl.src = `https://flagcdn.com/w20/${player.countryCode.toLowerCase()}.png`;
+        flagEl.title = player.country || 'Unknown';
+    } else {
+        flagEl.src = 'https://via.placeholder.com/32x20?text=?';
+        flagEl.title = 'Unknown';
+    }
+
+    // YouTube link
     const youtubeEl = document.getElementById("playerYoutube");
     if (player.youtube) {
         youtubeEl.href = player.youtube;
         youtubeEl.innerText = player.youtube;
         youtubeEl.style.color = "#58a6ff";
-        youtubeEl.style.textDecoration = "none";
     } else {
         youtubeEl.href = "#";
         youtubeEl.innerText = "N/A";
         youtubeEl.style.color = "#8b949e";
-        youtubeEl.style.textDecoration = "none";
     }
 
-    // Render verifications placeholder
+    // Verifications
     const verifContainer = document.getElementById("playerVerified");
     if (player.verifications && player.verifications.length > 0) {
         verifContainer.innerHTML = player.verifications.map(v => `<li>${v}</li>`).join("");
@@ -126,7 +137,7 @@ function renderPlayer() {
         verifContainer.innerHTML = "<li style='color:#8b949e;'>None yet</li>";
     }
 
-    // Helper to render level completions as clickable links
+    // Render level completions as clickable links
     function renderLevels(ids, containerId) {
         const container = document.getElementById(containerId);
         if (!ids || ids.length === 0) {
@@ -136,9 +147,14 @@ function renderPlayer() {
         container.innerHTML = ids.map(id => {
             const level = gameData.getLevelById(id);
             if (!level) return "";
-            return `<li><a href="level.html?level=${level.id}" style="color:#58a6ff; text-decoration:none;">
-                        ${level.title} (${level.difficulty})
-                    </a></li>`;
+            const videoLink = level.video
+                ? `https://www.youtube.com/watch?v=${level.video}`
+                : "#";
+            const videoText = level.video ? "Watch Video" : "No video yet";
+            return `<li>
+                        <a href="level.html?level=${level.id}">${level.title} (${level.difficulty})</a>
+                        - <a href="${videoLink}" target="_blank" style="color:#79c0ff; text-decoration:none;">${videoText}</a>
+                    </li>`;
         }).join("");
     }
 

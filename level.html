@@ -37,6 +37,8 @@ ul { list-style:none; padding-left:0; }
 ul li { background:#11161c; border:1px solid #1f2933; border-radius:8px; padding:6px 12px; margin-bottom:5px; }
 ul li a { color:#58a6ff; text-decoration:none; }
 ul li a:hover { text-decoration:underline; }
+.video-link { font-size:13px; margin-left:5px; color:#58a6ff; text-decoration:none; }
+.video-link.no-video { color:#8b949e; }
 </style>
 </head>
 <body>
@@ -45,8 +47,8 @@ ul li a:hover { text-decoration:underline; }
     <div class="left"><a href="index.html">Mario's Custom Demonlist</a></div>
     <div class="right">
         <a href="main.html">Main List</a>
-        <a href="extended.html">Extended</a>
-        <a href="legacy.html">Legacy</a>
+        <a href="#">Extended</a>
+        <a href="#">Legacy</a>
         <a href="leaderboard.html">Leaderboard</a>
         <a href="#">Submit</a>
     </div>
@@ -108,7 +110,7 @@ function renderLevel() {
     // Fill level info
     document.getElementById('levelTitle').innerText = level.title;
     document.getElementById('levelCreator').innerText = `by ${level.creator}`;
-    document.getElementById('levelVideo').src = `https://www.youtube.com/embed/${level.video}`;
+    document.getElementById('levelVideo').src = level.video ? `https://www.youtube.com/embed/${level.video}` : '';
     document.getElementById('levelPoints').innerText = `Points: ${level.points}`;
     document.getElementById('levelPosition').innerText = `Position: ${level.position}`;
     document.getElementById('levelDifficulty').innerText = `Difficulty: ${level.difficulty}`;
@@ -127,7 +129,11 @@ function renderLevel() {
         completedByContainer.innerHTML = "<li style='color:#8b949e;'>No one has completed this level yet.</li>";
     } else {
         completedByContainer.innerHTML = completedPlayers.map(p => {
-            return `<li><a href="player.html?user=${p.username}">${p.username} (Rank: ${p.rank})</a></li>`;
+            const videoUrl = p.completionVideos?.[level.id];
+            const videoLink = videoUrl 
+                ? `<a href="${videoUrl}" target="_blank" class="video-link">[Video]</a>` 
+                : `<span class="video-link no-video">[No video]</span>`;
+            return `<li><a href="player.html?user=${p.username}">${p.username} (Rank: ${p.rank})</a>${videoLink}</li>`;
         }).join('');
     }
 }

@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Leaderboard</title>
-
 <style>
 body {
     margin: 0;
@@ -27,26 +26,29 @@ body {
     display:flex; align-items:center;
     background:#11161c; border:1px solid #1f2933;
     border-radius:10px; margin-bottom:15px; padding:10px;
+    cursor:pointer; transition:background 0.2s;
 }
+.card:hover { background:#1f2330; }
 .rank { font-size:24px; font-weight:bold; width:50px; text-align:center; color:#79c0ff; }
 .thumbnail { width:80px; height:80px; border-radius:50%; background:#222; object-fit:cover; margin-right:15px; }
-.content { flex:1; }
-.user { font-size:20px; color:#79c0ff; }
+.flag { width:32px; height:20px; margin-right:10px; border-radius:4px; object-fit:cover; vertical-align:middle; }
+.content { flex:1; display:flex; flex-direction:column; }
+.user { font-size:20px; color:#79c0ff; display:flex; align-items:center; }
 .points { font-size:14px; color:#8b949e; margin-top:5px; }
 @media (max-width:600px) {
     .card { flex-direction:column; align-items:flex-start; }
     .thumbnail { margin:0 0 10px 0; }
     .rank { width:auto; margin-bottom:5px; }
+    .user { font-size:18px; }
 }
 </style>
 </head>
-
 <body>
 
 <div class="nav">
     <div class="left"><a href="index.html">Mario's Custom Demonlist</a></div>
     <div class="right">
-        <a href="oh-look-a-list.html">Main List</a>
+        <a href="main.html">Main List</a>
         <a href="extended.html">Extended</a>
         <a href="legacy.html">Legacy</a>
         <a class="active" href="leaderboard.html">Leaderboard</a>
@@ -56,39 +58,40 @@ body {
 
 <div class="header">
     <h1>Leaderboard</h1>
-    <p>look mom im here!</p>
+    <p>See who’s on top!</p>
 </div>
 
 <div class="list" id="levelList"></div>
 
 <script>
-const section = 'leaderboard'; // fixed for this page
-
 function renderLeaderboard() {
     const container = document.getElementById('levelList');
-    if (!window.gameData) return;
+    if (!window.gameData || !gameData.leaderboard) return;
 
     container.innerHTML = '';
-    const users = gameData[section] || [];
 
-    users.forEach(user => {
+    gameData.leaderboard.forEach(user => {
         const card = document.createElement('div');
         card.className = 'card';
-
-        // make card clickable
         card.onclick = () => {
             window.location.href = `player.html?user=${encodeURIComponent(user.username)}`;
         };
+
+        const flagUrl = user.countryCode
+            ? `https://flagcdn.com/w20/${user.countryCode.toLowerCase()}.png`
+            : 'https://via.placeholder.com/32x20?text=?';
 
         card.innerHTML = `
             <div class="rank">${user.rank}</div>
             <img class="thumbnail" src="${user.icon || 'images/default-user.png'}">
             <div class="content">
-                <div class="user">${user.username}</div>
+                <div class="user">
+                    <img class="flag" src="${flagUrl}" title="${user.country || 'Unknown'}">
+                    ${user.username}
+                </div>
                 <div class="points">Points: ${user.points}</div>
             </div>
         `;
-
         container.appendChild(card);
     });
 }
@@ -104,7 +107,6 @@ function loadDataScript(callback) {
     document.body.appendChild(script);
 }
 
-// load leaderboard
 loadDataScript(renderLeaderboard);
 </script>
 
