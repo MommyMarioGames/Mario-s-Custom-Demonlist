@@ -78,45 +78,52 @@ body {
 </div>
 
 <script>
-async function loadLevel() {
-    try {
-        // get level id from URL
-        const params = new URLSearchParams(window.location.search);
-        const levelId = Number(params.get('level'));
+function loadLevelsScript(callback) {
+    // remove old script if it exists
+    const old = document.getElementById('levelsScript');
+    if (old) old.remove();
 
-        // fetch fresh levels.js (no cache)
-        const res = await fetch(`levels.js?v=${Date.now()}`);
-        const text = await res.text();
+    // create new script
+    const script = document.createElement('script');
+    script.id = 'levelsScript';
+    script.src = 'levels.js?v=' + Date.now();
 
-        // run it to get `levels`
-        eval(text);
+    script.onload = callback;
+    document.body.appendChild(script);
+}
 
-        const level = levels.find(l => l.id === levelId);
+function renderLevel() {
+    const params = new URLSearchParams(window.location.search);
+    const levelId = Number(params.get('level'));
 
-        if(level) {
-            document.getElementById('levelTitle').innerText = level.title;
-            document.getElementById('levelCreator').innerText = `by ${level.creator}`;
-            document.getElementById('levelVideo').src = `https://www.youtube.com/embed/${level.video}`;
-            document.getElementById('levelPoints').innerText = `Points: ${level.points}`;
-            document.getElementById('levelPosition').innerText = `Position: ${level.position}`;
-            document.getElementById('levelDifficulty').innerText = `Difficulty: ${level.difficulty}`;
-            document.getElementById('levelTags').innerHTML =
-                level.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
-            document.getElementById('levelDescription').innerText = level.description;
-        } else {
-            document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Level not found</h2>";
-        }
+    // check if levels loaded
+    if (!window.levels) {
+        console.error("levels is NOT loaded");
+        return;
+    }
 
-    } catch (err) {
-        console.error("Failed to load level:", err);
+    const level = levels.find(l => l.id === levelId);
+
+    if (level) {
+        document.getElementById('levelTitle').innerText = level.title;
+        document.getElementById('levelCreator').innerText = `by ${level.creator}`;
+        document.getElementById('levelVideo').src = `https://www.youtube.com/embed/${level.video}`;
+        document.getElementById('levelPoints').innerText = `Points: ${level.points}`;
+        document.getElementById('levelPosition').innerText = `Position: ${level.position}`;
+        document.getElementById('levelDifficulty').innerText = `Difficulty: ${level.difficulty}`;
+        document.getElementById('levelTags').innerHTML =
+            level.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+        document.getElementById('levelDescription').innerText = level.description;
+    } else {
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Level not found</h2>";
     }
 }
 
-// load immediately
-loadLevel();
+// load + render
+loadLevelsScript(renderLevel);
 
-// OPTIONAL: auto-refresh every 5 sec (if you edit while viewing)
-setInterval(loadLevel, 5000);
+// optional live update
+setInterval(() => loadLevelsScript(renderLevel), 5000);
 </script>
 
 </body>
