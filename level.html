@@ -51,7 +51,7 @@ body {
 
 <div class="header">
     <h1>Level Info</h1>
-    <p>you should see a demon here...</p>
+    <p>you should see a level here...</p>
 </div>
 
 <div class="container">
@@ -112,7 +112,7 @@ function renderLevel() {
             level.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
         document.getElementById('levelDescription').innerText = level.description;
     } else {
-        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Level not found</h2>";
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>NO LEVEL!!!!</h2>";
     }
 }
 
