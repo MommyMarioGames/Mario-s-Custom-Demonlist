@@ -66,35 +66,56 @@ body {
 <script>
 function renderLeaderboard() {
     const container = document.getElementById('levelList');
-    if (!window.gameData || !gameData.leaderboard) return;
+    if (!window.gameData) return;
 
     container.innerHTML = '';
+    const users = gameData.leaderboard || [];
 
-    gameData.leaderboard.forEach(user => {
+    users.forEach(user => {
         const card = document.createElement('div');
         card.className = 'card';
+
+        // make card clickable
         card.onclick = () => {
             window.location.href = `player.html?user=${encodeURIComponent(user.username)}`;
         };
 
-        const flagUrl = user.countryCode
-            ? `https://flagcdn.com/w20/${user.countryCode.toLowerCase()}.png`
-            : 'https://via.placeholder.com/32x20?text=?';
+        // flag image: use user.countryCode (ISO 3166-1 alpha-2)
+        const flagUrl = user.countryCode 
+            ? `https://flagcdn.com/w20/${user.countryCode.toLowerCase()}.png` 
+            : 'https://via.placeholder.com/20x14?text=?';
 
         card.innerHTML = `
             <div class="rank">${user.rank}</div>
             <img class="thumbnail" src="${user.icon || 'images/default-user.png'}">
             <div class="content">
                 <div class="user">
-                    <img class="flag" src="${flagUrl}" title="${user.country || 'Unknown'}">
+                    <img class="flag" src="${flagUrl}" title="${user.country || 'Unknown'}" data-username="${user.username}">
                     ${user.username}
                 </div>
                 <div class="points">Points: ${user.points}</div>
             </div>
         `;
+
         container.appendChild(card);
     });
 }
+
+// Update flag dynamically if setPlayerCountry is called
+(function watchFlags() {
+    const originalFn = gameData.setPlayerCountry;
+    gameData.setPlayerCountry = function(username, countryCode, countryName) {
+        originalFn.call(this, username, countryCode, countryName);
+        // update DOM flag
+        const flagImgs = document.querySelectorAll(`.flag[data-username="${username}"]`);
+        flagImgs.forEach(img => {
+            img.src = countryCode
+                ? `https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`
+                : 'https://via.placeholder.com/20x14?text=?';
+            img.title = countryName || 'Unknown';
+        });
+    };
+})();
 
 function loadDataScript(callback) {
     const old = document.getElementById('levelsScript');
@@ -107,6 +128,7 @@ function loadDataScript(callback) {
     document.body.appendChild(script);
 }
 
+// Initial render
 loadDataScript(renderLeaderboard);
 </script>
 

@@ -83,16 +83,6 @@ body {
 const params = new URLSearchParams(window.location.search);
 const username = params.get("user"); // e.g., ?user=PlayerOne
 
-function loadGameData(callback) {
-    const old = document.getElementById('levelsScript');
-    if (old) old.remove();
-    const script = document.createElement('script');
-    script.id = 'levelsScript';
-    script.src = 'levels.js?v=' + Date.now();
-    script.onload = callback;
-    document.body.appendChild(script);
-}
-
 function renderPlayer() {
     if (!window.gameData) return;
 
@@ -102,20 +92,9 @@ function renderPlayer() {
         return;
     }
 
-    // Player basic info
     document.getElementById("playerName").innerText = player.username;
     document.getElementById("playerRank").innerText = `Rank: ${player.rank}`;
     document.getElementById("playerPoints").innerText = `Points: ${player.points}`;
-
-    // Player flag
-    const flagEl = document.getElementById("playerFlag");
-    if (player.countryCode) {
-        flagEl.src = `https://flagcdn.com/w20/${player.countryCode.toLowerCase()}.png`;
-        flagEl.title = player.country || 'Unknown';
-    } else {
-        flagEl.src = 'https://via.placeholder.com/32x20?text=?';
-        flagEl.title = 'Unknown';
-    }
 
     // YouTube link
     const youtubeEl = document.getElementById("playerYoutube");
@@ -129,33 +108,41 @@ function renderPlayer() {
         youtubeEl.style.color = "#8b949e";
     }
 
+    // Country flag
+    let flagEl = document.getElementById("playerFlag");
+    if (!flagEl) {
+        flagEl = document.createElement("img");
+        flagEl.id = "playerFlag";
+        flagEl.style.width = "32px";
+        flagEl.style.height = "20px";
+        flagEl.style.marginRight = "10px";
+        flagEl.style.verticalAlign = "middle";
+        document.getElementById("playerName").prepend(flagEl);
+    }
+    flagEl.src = player.countryCode
+        ? `https://flagcdn.com/w20/${player.countryCode.toLowerCase()}.png`
+        : 'https://via.placeholder.com/20x14?text=?';
+    flagEl.title = player.country || 'Unknown';
+
     // Verifications
     const verifContainer = document.getElementById("playerVerified");
-    if (player.verifications && player.verifications.length > 0) {
-        verifContainer.innerHTML = player.verifications.map(v => `<li>${v}</li>`).join("");
-    } else {
-        verifContainer.innerHTML = "<li style='color:#8b949e;'>None yet</li>";
-    }
+    verifContainer.innerHTML = (player.verifications && player.verifications.length > 0)
+        ? player.verifications.map(v => `<li>${v}</li>`).join("")
+        : "<li style='color:#8b949e;'>None yet</li>";
 
-    // Render level completions as clickable links
+    // Helper for level completions
     function renderLevels(ids, containerId) {
         const container = document.getElementById(containerId);
-        if (!ids || ids.length === 0) {
-            container.innerHTML = "<li style='color:#8b949e;'>No completions yet.</li>";
-            return;
-        }
-        container.innerHTML = ids.map(id => {
-            const level = gameData.getLevelById(id);
-            if (!level) return "";
-            const videoLink = level.video
-                ? `https://www.youtube.com/watch?v=${level.video}`
-                : "#";
-            const videoText = level.video ? "Watch Video" : "No video yet";
-            return `<li>
-                        <a href="level.html?level=${level.id}">${level.title} (${level.difficulty})</a>
-                        - <a href="${videoLink}" target="_blank" style="color:#79c0ff; text-decoration:none;">${videoText}</a>
-                    </li>`;
-        }).join("");
+        container.innerHTML = (!ids || ids.length === 0)
+            ? "<li style='color:#8b949e;'>No completions yet.</li>"
+            : ids.map(id => {
+                const level = gameData.getLevelById(id);
+                return level
+                    ? `<li><a href="level.html?level=${level.id}" style="color:#58a6ff; text-decoration:none;">
+                        ${level.title} (${level.difficulty})
+                      </a></li>`
+                    : "";
+            }).join("");
     }
 
     renderLevels(player.mainCompletions || [], "playerMain");
@@ -163,6 +150,34 @@ function renderPlayer() {
     renderLevels(player.legacyCompletions || [], "playerLegacy");
 }
 
+// Watch for country updates
+(function watchPlayerFlag() {
+    const originalFn = gameData.setPlayerCountry;
+    gameData.setPlayerCountry = function(username, countryCode, countryName) {
+        originalFn.call(this, username, countryCode, countryName);
+        if (username === window.username) {
+            const flagEl = document.getElementById("playerFlag");
+            if (flagEl) {
+                flagEl.src = countryCode
+                    ? `https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`
+                    : 'https://via.placeholder.com/20x14?text=?';
+                flagEl.title = countryName || 'Unknown';
+            }
+        }
+    };
+})();
+
+function loadGameData(callback) {
+    const old = document.getElementById('levelsScript');
+    if (old) old.remove();
+    const script = document.createElement('script');
+    script.id = 'levelsScript';
+    script.src = 'levels.js?v=' + Date.now();
+    script.onload = callback;
+    document.body.appendChild(script);
+}
+
+// Initial render
 loadGameData(renderPlayer);
 </script>
 

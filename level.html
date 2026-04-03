@@ -39,6 +39,7 @@ ul li a { color:#58a6ff; text-decoration:none; }
 ul li a:hover { text-decoration:underline; }
 .video-link { font-size:13px; margin-left:5px; color:#58a6ff; text-decoration:none; }
 .video-link.no-video { color:#8b949e; }
+.flag { width:20px; height:14px; vertical-align:middle; margin-right:6px; border-radius:3px; }
 </style>
 </head>
 <body>
@@ -129,11 +130,16 @@ function renderLevel() {
         completedByContainer.innerHTML = "<li style='color:#8b949e;'>No one has completed this level yet.</li>";
     } else {
         completedByContainer.innerHTML = completedPlayers.map(p => {
+            // Flag for each player
+            const flagUrl = p.countryCode ? `https://flagcdn.com/w20/${p.countryCode.toLowerCase()}.png` : 'https://via.placeholder.com/20x14?text=?';
             const videoUrl = p.completionVideos?.[level.id];
             const videoLink = videoUrl 
                 ? `<a href="${videoUrl}" target="_blank" class="video-link">[Video]</a>` 
                 : `<span class="video-link no-video">[No video]</span>`;
-            return `<li><a href="player.html?user=${p.username}">${p.username} (Rank: ${p.rank})</a>${videoLink}</li>`;
+            return `<li>
+                        <img src="${flagUrl}" alt="${p.country || 'Unknown'}" class="flag">
+                        <a href="player.html?user=${p.username}">${p.username} (Rank: ${p.rank})</a>${videoLink}
+                    </li>`;
         }).join('');
     }
 }
@@ -142,7 +148,6 @@ function renderLevel() {
 function loadLevelsScript(callback) {
     const old = document.getElementById('levelsScript');
     if (old) old.remove();
-
     const script = document.createElement('script');
     script.id = 'levelsScript';
     script.src = 'levels.js?v=' + Date.now();
