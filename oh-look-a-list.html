@@ -51,29 +51,50 @@ body {
 
 <div class="list" id="levelList"></div>
 
-<!-- DATA NOM NOM NOM AHHHHHHHHHHH MORE DATA -->
-<script src="levels.js"></script>
-
-<!-- this should generate the fucking cards -->
+<!-- yeah -->
 <script>
 const levelList = document.getElementById('levelList');
 
-levels.forEach(level => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.onclick = () => window.location.href = `level.html?level=${level.id}`;
-    card.innerHTML = `
-        <img class="thumbnail" src="${level.thumbnail}">
-        <div class="content">
-            <div class="title">${level.title}</div>
-            <div class="points">Points: ${level.points}</div>
-            <div class="tags">
-                ${level.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-            </div>
-        </div>
-    `;
-    levelList.appendChild(card);
-});
+async function loadLevels() {
+    try {
+        // fetch fresh version (bypass cache)
+        const res = await fetch(`levels.js?v=${Date.now()}`);
+        const text = await res.text();
+
+        // level
+        eval(text);
+
+        // clear old cards
+        levelList.innerHTML = '';
+
+        // rebuild cards
+        levels.forEach(level => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => window.location.href = `level.html?level=${level.id}`;
+            card.innerHTML = `
+                <img class="thumbnail" src="${level.thumbnail}">
+                <div class="content">
+                    <div class="title">${level.title}</div>
+                    <div class="points">Points: ${level.points}</div>
+                    <div class="tags">
+                        ${level.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+            levelList.appendChild(card);
+        });
+
+    } catch (err) {
+        console.error("Failed to load levels:", err);
+    }
+}
+
+// load immediately
+loadLevels();
+
+// reload every 5 seconds
+setInterval(loadLevels, 5000);
 </script>
 
 </body>
