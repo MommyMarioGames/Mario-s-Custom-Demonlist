@@ -74,11 +74,19 @@ window.gameData = {
             username: "PlayerOne",
             points: 500,
             rank: 1,
-            youtube: "yt link here",
-            verifications: ["insert verifiaction", "top 67 player"],
+            youtube: "https://youtube.com/PlayerOne",
+            verifications: ["insert verification", "top 67 player"],
             mainCompletions: [1, 2],
             extendedCompletions: [101],
-            legacyCompletions: [201]
+            legacyCompletions: [201],
+            countryCode: "US",
+            country: "United States",
+            completionVideos: {
+                1: "https://youtu.be/-LpHxwAR8iA",
+                2: "",
+                101: "",
+                201: ""
+            }
         },
         {
             username: "PlayerTwo",
@@ -88,17 +96,23 @@ window.gameData = {
             verifications: ["Verified ✅"],
             mainCompletions: [2],
             extendedCompletions: [],
-            legacyCompletions: []
+            legacyCompletions: [],
+            countryCode: "PE",
+            country: "Peru",
+            completionVideos: {2: ""}
         },
         {
             username: "PlayerThree",
             points: 390,
             rank: 3,
             youtube: "https://youtube.com/PlayerThree",
-            verifications: [""],
+            verifications: [],
             mainCompletions: [],
             extendedCompletions: [101],
-            legacyCompletions: []
+            legacyCompletions: [],
+            countryCode: "GB",
+            country: "United Kingdom",
+            completionVideos: {101: ""}
         }
     ],
 
@@ -113,11 +127,22 @@ window.gameData = {
         }
         return null;
     },
+
     getLevelsByCategory: function(category) {
         return this[category] || [];
     },
+
     getLeaderboard: function(topN = null) {
-        const sorted = this.leaderboard.sort((a, b) => b.points - a.points);
+        // Return a new sorted array, don't mutate original
+        const sorted = [...this.leaderboard].sort((a, b) => b.points - a.points);
         return topN ? sorted.slice(0, topN) : sorted;
+    },
+
+    setPlayerCountry: function(username, countryCode, countryName) {
+        const player = this.leaderboard.find(p => p.username === username);
+        if (player) {
+            player.countryCode = countryCode.toUpperCase();
+            player.country = countryName;
+        }
     }
 };
