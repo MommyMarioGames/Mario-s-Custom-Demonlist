@@ -1,10 +1,10 @@
-const levels = [
+window.levels = [
     {
         id: 1,
         title: "1. RobTimBo",
         creator: "BowlOfJelly",
         thumbnail: "simpsion.jpeg",
-        video: "LpHxwAR8iA", // YouTube ID
+        video: "LpHxwAR8iA",
         points: 250,
         position: 1,
         difficulty: "Hard Demon",
