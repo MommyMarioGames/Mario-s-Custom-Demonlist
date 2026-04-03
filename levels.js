@@ -3,7 +3,7 @@ window.levels = [
         id: 1,
         title: "1. RobTimBo",
         creator: "BowlOfJelly",
-        thumbnail: "simpsion.jpeg",
+        thumbnail: "images/96455699.webp",
         video: "-LpHxwAR8iA",
         points: 250,
         position: 1,
