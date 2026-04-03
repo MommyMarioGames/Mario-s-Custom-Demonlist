@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leaderboard</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Comic Sans MS", Arial, sans-serif;
+    background: #0b0f14;
+    color: #e6edf3;
+}
+.nav {
+    display:flex; justify-content:space-between;
+    padding:15px 30px; border-bottom:1px solid #1f2933;
+}
+.nav .left { font-weight:bold; color:#58a6ff; }
+.nav .right a { margin-left:20px; text-decoration:none; color:#c9d1d9; }
+.nav .right a.active { background:#2b3240; padding:6px 10px; border-radius:6px; }
+.header { text-align:center; padding:40px 20px; }
+.header h1 { font-size:42px; margin:0; }
+.header p { color:#8b949e; }
+.list { max-width:900px; margin:auto; padding:20px; }
+.card {
+    display:flex; align-items:center;
+    background:#11161c; border:1px solid #1f2933;
+    border-radius:10px; margin-bottom:15px; padding:10px;
+}
+.rank { font-size:24px; font-weight:bold; width:50px; text-align:center; color:#79c0ff; }
+.thumbnail { width:80px; height:80px; border-radius:50%; background:#222; object-fit:cover; margin-right:15px; }
+.content { flex:1; }
+.user { font-size:20px; color:#79c0ff; }
+.points { font-size:14px; color:#8b949e; margin-top:5px; }
+@media (max-width:600px) {
+    .card { flex-direction:column; align-items:flex-start; }
+    .thumbnail { margin:0 0 10px 0; }
+    .rank { width:auto; margin-bottom:5px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="nav">
+    <div class="left"><a href="index.html">Mario's Custom Demonlist</a></div>
+    <div class="right">
+        <a href="oh-look-a-list.html">Main List</a>
+        <a href="extended.html">Extended</a>
+        <a href="legacy.html">Legacy</a>
+        <a class="active" href="#">Leaderboard</a>
+        <a href="#">Submit</a>
+    </div>
+</div>
+
+<div class="header">
+    <h1>Leaderboard</h1>
+    <p>look mom im here!</p>
+</div>
+
+<div class="list" id="levelList"></div>
+
+<script>
+const section = 'leaderboard'; // fixed for this page
+
+function renderLeaderboard() {
+    const container = document.getElementById('levelList');
+    if (!window.gameData) return;
+
+    container.innerHTML = '';
+    const users = gameData[section] || [];
+
+    users.forEach(user => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <div class="rank">${user.rank}</div>
+            <img class="thumbnail" src="${user.icon || 'images/default-user.png'}">
+            <div class="content">
+                <div class="user">${user.user}</div>
+                <div class="points">Points: ${user.points}</div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function loadDataScript(callback) {
+    const old = document.getElementById('levelsScript');
+    if (old) old.remove();
+
+    const script = document.createElement('script');
+    script.id = 'levelsScript';
+    script.src = 'levels.js?v=' + Date.now();
+    script.onload = callback;
+    document.body.appendChild(script);
+}
+
+// load leaderboard
+loadDataScript(renderLeaderboard);
+</script>
+
+</body>
+</html>
