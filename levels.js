@@ -16,7 +16,7 @@ window.levels = [
         title: "2. placeholder",
         creator: "placeholder",
         thumbnail: "images/IMG_2258.PNG",
-        video: "QrGrOK8oZG8&t",
+        video: "QrGrOK8oZG8",
         points: 200,
         position: 2,
         difficulty: "difficulty",
