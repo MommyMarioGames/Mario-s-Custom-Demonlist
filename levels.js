@@ -1,8 +1,8 @@
 const levels = [
     {
         id: 1,
-        title: "1. fucking level",
-        creator: "RobTimBo",
+        title: "1. RobTimBo",
+        creator: "BowlOfJelly",
         thumbnail: "simpsion.jpeg",
         video: "LpHxwAR8iA", // YouTube ID
         points: 250,
