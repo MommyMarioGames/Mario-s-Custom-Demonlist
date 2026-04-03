@@ -110,12 +110,13 @@ function renderPlayer() {
     const verifContainer = document.getElementById("playerVerified");
     verifContainer.innerHTML = (player.verifications || []).map(v => `<li>${v}</li>`).join("");
 
-    // Helper to render level completions
+    // Helper to render level completions as clickable links
     function renderLevels(ids, containerId) {
         const container = document.getElementById(containerId);
         container.innerHTML = ids.map(id => {
             const level = gameData.getLevelById(id);
-            return level ? `<li>${level.title} (${level.difficulty})</li>` : "";
+            if (!level) return "";
+            return `<li><a href="level.html?level=${level.id}" style="color:#58a6ff; text-decoration:none;">${level.title} (${level.difficulty})</a></li>`;
         }).join("");
     }
 
