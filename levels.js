@@ -4,7 +4,7 @@ window.levels = [
         title: "1. RobTimBo",
         creator: "BowlOfJelly",
         thumbnail: "simpsion.jpeg",
-        video: "LpHxwAR8iA",
+        video: "-LpHxwAR8iA",
         points: 250,
         position: 1,
         difficulty: "Hard Demon",
