@@ -74,8 +74,8 @@ window.gameData = {
             username: "PlayerOne",
             points: 500,
             rank: 1,
-            youtube: "https://youtube.com/PlayerOne",
-            verifications: ["Verified ✅", "Top 10 Player"],
+            youtube: "yt link here",
+            verifications: ["insert verifiaction", "top 67 player"],
             mainCompletions: [1, 2],
             extendedCompletions: [101],
             legacyCompletions: [201]
