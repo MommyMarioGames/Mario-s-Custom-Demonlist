@@ -95,7 +95,7 @@ window.gameData = {
             points: 390,
             rank: 3,
             youtube: "https://youtube.com/PlayerThree",
-            verifications: ["Not Verified ❌"],
+            verifications: [""],
             mainCompletions: [],
             extendedCompletions: [101],
             legacyCompletions: []
