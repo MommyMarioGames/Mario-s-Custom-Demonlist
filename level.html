@@ -78,28 +78,23 @@ body {
 </div>
 
 <script>
-function loadLevelsScript(callback) {
-    const old = document.getElementById('levelsScript');
-    if (old) old.remove();
-
-    const script = document.createElement('script');
-    script.id = 'levelsScript';
-    script.src = 'levels.js?v=' + Date.now();
-
-    script.onload = callback;
-    document.body.appendChild(script);
-}
-
 function renderLevel() {
     const params = new URLSearchParams(window.location.search);
     const levelId = Number(params.get('level'));
 
-    if (!window.levels) {
-        console.error("levels is NOT loaded");
+    if (!window.gameData) {
+        console.error("gameData is NOT loaded");
         return;
     }
 
-    const level = levels.find(l => l.id === levelId);
+    // Combine all level arrays into one list for easy lookup
+    const allLevels = [
+        ...gameData.main,
+        ...gameData.extended,
+        ...gameData.legacy
+    ];
+
+    const level = allLevels.find(l => l.id === levelId);
 
     if (level) {
         document.getElementById('levelTitle').innerText = level.title;
@@ -112,11 +107,22 @@ function renderLevel() {
             level.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
         document.getElementById('levelDescription').innerText = level.description;
     } else {
-        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>NO LEVEL!!!!</h2>";
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>LEVEL NOT FOUND</h2>";
     }
 }
 
-// load once
+// Load script + render
+function loadLevelsScript(callback) {
+    const old = document.getElementById('levelsScript');
+    if (old) old.remove();
+
+    const script = document.createElement('script');
+    script.id = 'levelsScript';
+    script.src = 'levels.js?v=' + Date.now();
+    script.onload = callback;
+    document.body.appendChild(script);
+}
+
 loadLevelsScript(renderLevel);
 </script>
 

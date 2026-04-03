@@ -37,9 +37,9 @@ body {
     <div class="left"><a href="index.html">Mario's Custom Demonlist</a></div>
     <div class="right">
         <a class="active" href="#">Main List</a>
-        <a href="#">Extended</a>
-        <a href="#">Legacy</a>
-        <a href="#">Leaderboard</a>
+        <a href="extended.html">Extended</a>
+        <a href="legacy.html">Legacy</a>
+        <a href="leaderboard.html">Leaderboard</a>
         <a href="#">Submit</a>
     </div>
 </div>
@@ -52,54 +52,59 @@ body {
 <div class="list" id="levelList"></div>
 
 <script>
-function loadLevelsScript(callback) {
-    const old = document.getElementById('levelsScript');
-    if (old) old.remove();
+const section = 'extended'; // change to 'extended', 'legacy', or 'leaderboard' for other pages
 
-    const script = document.createElement('script');
-    script.id = 'levelsScript';
-    script.src = 'levels.js?v=' + Date.now();
+function renderList() {
+  const container = document.getElementById('listContainer');
+  if (!window.gameData) return;
 
-    script.onload = callback;
-    document.body.appendChild(script);
-}
+  container.innerHTML = '';
 
-function renderLevels() {
-    const levelList = document.getElementById('levelList');
+  const items = gameData[section];
 
-    // safety check
-    if (!window.levels) {
-        console.error("levels not loaded");
-        return;
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    if (section === 'leaderboard') {
+      card.innerHTML = `
+        <img class="thumbnail" src="${item.icon}">
+        <div class="content">
+          <div class="title">${item.rank}. ${item.user}</div>
+          <div class="points">Points: ${item.points}</div>
+        </div>
+      `;
+    } else {
+      card.onclick = () => window.location.href = `level.html?level=${item.id}`;
+      card.innerHTML = `
+        <img class="thumbnail" src="${item.thumbnail}">
+        <div class="content">
+          <div class="title">${item.title}</div>
+          <div class="points">Points: ${item.points}</div>
+          <div class="tags">
+            ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+          </div>
+        </div>
+      `;
     }
 
-    // clear old cards
-    levelList.innerHTML = '';
-
-    // build cards
-    levels.forEach(level => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.onclick = () => window.location.href = `level.html?level=${level.id}`;
-        card.innerHTML = `
-            <img class="thumbnail" src="${level.thumbnail}">
-            <div class="content">
-                <div class="title">${level.title}</div>
-                <div class="points">Points: ${level.points}</div>
-                <div class="tags">
-                    ${level.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                </div>
-            </div>
-        `;
-        levelList.appendChild(card);
-    });
+    container.appendChild(card);
+  });
 }
 
-// load + render
-loadLevelsScript(renderLevels);
+// load script dynamically
+function loadLevelsScript(callback) {
+  const old = document.getElementById('levelsScript');
+  if (old) old.remove();
 
-// auto refresh
-setInterval(() => loadLevelsScript(renderLevels), 5000);
+  const script = document.createElement('script');
+  script.id = 'levelsScript';
+  script.src = 'levels.js?v=' + Date.now();
+  script.onload = callback;
+  document.body.appendChild(script);
+}
+
+loadLevelsScript(renderList);
 </script>
 
 </body>
