@@ -106,6 +106,24 @@ function renderLevel() {
         document.getElementById('levelTags').innerHTML =
             level.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
         document.getElementById('levelDescription').innerText = level.description;
+
+        // === New: Completed By Section ===
+        const completedByContainer = document.getElementById('levelCompletedBy');
+        const completedPlayers = gameData.leaderboard.filter(player => {
+            return (player.mainCompletions && player.mainCompletions.includes(level.id)) ||
+                   (player.extendedCompletions && player.extendedCompletions.includes(level.id)) ||
+                   (player.legacyCompletions && player.legacyCompletions.includes(level.id));
+        });
+
+        if (completedPlayers.length === 0) {
+            completedByContainer.innerHTML = "<li style='color:#8b949e;'>No one has completed this level yet.</li>";
+        } else {
+            completedByContainer.innerHTML = completedPlayers.map(p => {
+                return `<li><a href="player.html?user=${p.username}" style="color:#58a6ff; text-decoration:none;">
+                            ${p.username} (Rank: ${p.rank})
+                        </a></li>`;
+            }).join('');
+        }
     } else {
         document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>LEVEL NOT FOUND</h2>";
     }

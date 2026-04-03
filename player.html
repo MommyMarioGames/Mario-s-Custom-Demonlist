@@ -60,21 +60,21 @@ body {
 <div class="container playerInfo">
     <div id="playerRank">Rank: 0</div>
     <div id="playerPoints">Points: 0</div>
-    <div>YouTube: <a id="playerYoutube" href="#" target="_blank">Link</a></div>
+    <div>YouTube: <a id="playerYoutube" href="#" target="_blank">N/A</a></div>
 </div>
 
 <div class="container completions">
     <h3>Verifications</h3>
-    <ul id="playerVerified"></ul>
+    <ul id="playerVerified"><li style="color:#8b949e;">None yet</li></ul>
 
     <h3>Main Completions</h3>
-    <ul id="playerMain"></ul>
+    <ul id="playerMain"><li style="color:#8b949e;">No completions yet.</li></ul>
 
     <h3>Extended Completions</h3>
-    <ul id="playerExtended"></ul>
+    <ul id="playerExtended"><li style="color:#8b949e;">No completions yet.</li></ul>
 
     <h3>Legacy Completions</h3>
-    <ul id="playerLegacy"></ul>
+    <ul id="playerLegacy"><li style="color:#8b949e;">No completions yet.</li></ul>
 </div>
 
 <script>
@@ -103,20 +103,42 @@ function renderPlayer() {
     document.getElementById("playerName").innerText = player.username;
     document.getElementById("playerRank").innerText = `Rank: ${player.rank}`;
     document.getElementById("playerPoints").innerText = `Points: ${player.points}`;
-    document.getElementById("playerYoutube").href = player.youtube;
-    document.getElementById("playerYoutube").innerText = player.youtube;
 
-    // Render verifications
+    // YouTube placeholder
+    const youtubeEl = document.getElementById("playerYoutube");
+    if (player.youtube) {
+        youtubeEl.href = player.youtube;
+        youtubeEl.innerText = player.youtube;
+        youtubeEl.style.color = "#58a6ff";
+        youtubeEl.style.textDecoration = "none";
+    } else {
+        youtubeEl.href = "#";
+        youtubeEl.innerText = "N/A";
+        youtubeEl.style.color = "#8b949e";
+        youtubeEl.style.textDecoration = "none";
+    }
+
+    // Render verifications placeholder
     const verifContainer = document.getElementById("playerVerified");
-    verifContainer.innerHTML = (player.verifications || []).map(v => `<li>${v}</li>`).join("");
+    if (player.verifications && player.verifications.length > 0) {
+        verifContainer.innerHTML = player.verifications.map(v => `<li>${v}</li>`).join("");
+    } else {
+        verifContainer.innerHTML = "<li style='color:#8b949e;'>None yet</li>";
+    }
 
     // Helper to render level completions as clickable links
     function renderLevels(ids, containerId) {
         const container = document.getElementById(containerId);
+        if (!ids || ids.length === 0) {
+            container.innerHTML = "<li style='color:#8b949e;'>No completions yet.</li>";
+            return;
+        }
         container.innerHTML = ids.map(id => {
             const level = gameData.getLevelById(id);
             if (!level) return "";
-            return `<li><a href="level.html?level=${level.id}" style="color:#58a6ff; text-decoration:none;">${level.title} (${level.difficulty})</a></li>`;
+            return `<li><a href="level.html?level=${level.id}" style="color:#58a6ff; text-decoration:none;">
+                        ${level.title} (${level.difficulty})
+                    </a></li>`;
         }).join("");
     }
 
