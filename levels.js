@@ -34,7 +34,6 @@ window.gameData = {
     // EXTENDED LEVELS
     // =========================
     extended: [
-        // example:
         {
             id: 101,
             title: "Extended Level 1",
@@ -53,7 +52,6 @@ window.gameData = {
     // LEGACY LEVELS
     // =========================
     legacy: [
-        // example:
         {
             id: 201,
             title: "Legacy Level 1",
@@ -75,17 +73,32 @@ window.gameData = {
         {
             username: "PlayerOne",
             points: 500,
-            rank: 1
+            rank: 1,
+            youtube: "https://youtube.com/PlayerOne",
+            verifications: ["Verified ✅", "Top 10 Player"],
+            mainCompletions: [1, 2],
+            extendedCompletions: [101],
+            legacyCompletions: [201]
         },
         {
             username: "PlayerTwo",
             points: 420,
-            rank: 2
+            rank: 2,
+            youtube: "https://youtube.com/PlayerTwo",
+            verifications: ["Verified ✅"],
+            mainCompletions: [2],
+            extendedCompletions: [],
+            legacyCompletions: []
         },
         {
             username: "PlayerThree",
             points: 390,
-            rank: 3
+            rank: 3,
+            youtube: "https://youtube.com/PlayerThree",
+            verifications: ["Not Verified ❌"],
+            mainCompletions: [],
+            extendedCompletions: [101],
+            legacyCompletions: []
         }
     ],
 

@@ -74,14 +74,21 @@ function renderLeaderboard() {
     users.forEach(user => {
         const card = document.createElement('div');
         card.className = 'card';
+
+        // make card clickable
+        card.onclick = () => {
+            window.location.href = `player.html?user=${encodeURIComponent(user.username)}`;
+        };
+
         card.innerHTML = `
             <div class="rank">${user.rank}</div>
             <img class="thumbnail" src="${user.icon || 'images/default-user.png'}">
             <div class="content">
-                <div class="user">${user.user}</div>
+                <div class="user">${user.username}</div>
                 <div class="points">Points: ${user.points}</div>
             </div>
         `;
+
         container.appendChild(card);
     });
 }

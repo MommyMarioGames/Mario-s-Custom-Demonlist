@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Player Info</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Comic Sans MS", Arial, sans-serif;
+    background: #0b0f14;
+    color: #e6edf3;
+    text-align: center;
+}
+.nav {
+    display:flex; justify-content:space-between;
+    padding:15px 30px; border-bottom:1px solid #1f2933;
+}
+.nav .left { font-weight:bold; color:#58a6ff; }
+.nav .right a { margin-left:20px; text-decoration:none; color:#c9d1d9; }
+.nav .right a.active { background:#2b3240; padding:6px 10px; border-radius:6px; }
+
+.header { padding:40px 20px; }
+.header h1 { font-size:42px; margin:0; }
+.header p { color:#8b949e; }
+
+.container { max-width:800px; margin:0 auto; padding:20px; text-align:center; }
+.playerInfo { margin-bottom:30px; }
+.playerInfo div { margin:6px 0; }
+.playerInfo a { color:#58a6ff; text-decoration:none; }
+.playerInfo a:hover { text-decoration:underline; }
+
+.completions {
+    margin-top:20px;
+    text-align:left;
+}
+.completions h3 { color:#79c0ff; margin-bottom:6px; }
+.completions ul { list-style:none; padding-left:0; }
+.completions li { background:#11161c; padding:8px 12px; margin-bottom:5px; border-radius:8px; border:1px solid #1f2933; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+    <div class="left"><a href="index.html">Mario's Custom Demonlist</a></div>
+    <div class="right">
+        <a href="oh-look-a-list.html">Main List</a>
+        <a href="extended.html">Extended</a>
+        <a href="legacy.html">Legacy</a>
+        <a class="active" href="#">Leaderboard</a>
+        <a href="#">Submit</a>
+    </div>
+</div>
+
+<div class="header">
+    <h1 id="playerName">Player Name</h1>
+</div>
+
+<div class="container playerInfo">
+    <div id="playerRank">Rank: 0</div>
+    <div id="playerPoints">Points: 0</div>
+    <div>YouTube: <a id="playerYoutube" href="#" target="_blank">Link</a></div>
+</div>
+
+<div class="container completions">
+    <h3>Verifications</h3>
+    <ul id="playerVerified"></ul>
+
+    <h3>Main Completions</h3>
+    <ul id="playerMain"></ul>
+
+    <h3>Extended Completions</h3>
+    <ul id="playerExtended"></ul>
+
+    <h3>Legacy Completions</h3>
+    <ul id="playerLegacy"></ul>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const username = params.get("user"); // e.g., ?user=PlayerOne
+
+function loadGameData(callback) {
+    const old = document.getElementById('levelsScript');
+    if (old) old.remove();
+    const script = document.createElement('script');
+    script.id = 'levelsScript';
+    script.src = 'levels.js?v=' + Date.now();
+    script.onload = callback;
+    document.body.appendChild(script);
+}
+
+function renderPlayer() {
+    if (!window.gameData) return;
+
+    const player = gameData.leaderboard.find(p => p.username === username);
+    if (!player) {
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Player Not Found</h2>";
+        return;
+    }
+
+    document.getElementById("playerName").innerText = player.username;
+    document.getElementById("playerRank").innerText = `Rank: ${player.rank}`;
+    document.getElementById("playerPoints").innerText = `Points: ${player.points}`;
+    document.getElementById("playerYoutube").href = player.youtube;
+    document.getElementById("playerYoutube").innerText = player.youtube;
+
+    // Render verifications
+    const verifContainer = document.getElementById("playerVerified");
+    verifContainer.innerHTML = (player.verifications || []).map(v => `<li>${v}</li>`).join("");
+
+    // Helper to render level completions
+    function renderLevels(ids, containerId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = ids.map(id => {
+            const level = gameData.getLevelById(id);
+            return level ? `<li>${level.title} (${level.difficulty})</li>` : "";
+        }).join("");
+    }
+
+    renderLevels(player.mainCompletions || [], "playerMain");
+    renderLevels(player.extendedCompletions || [], "playerExtended");
+    renderLevels(player.legacyCompletions || [], "playerLegacy");
+}
+
+loadGameData(renderPlayer);
+</script>
+
+</body>
+</html>
