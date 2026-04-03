@@ -49,8 +49,8 @@ body {
     <div class="left"><a href="index.html">Mario's Custom Demonlist</a></div>
     <div class="right">
         <a href="main.html">Main List</a>
-        <a href="extended.html">Extended</a>
-        <a href="legacy.html">Legacy</a>
+        <a href="#">Extended</a>
+        <a href="#">Legacy</a>
         <a class="active" href="leaderboard.html">Leaderboard</a>
         <a href="#">Submit</a>
     </div>
@@ -69,44 +69,34 @@ function renderLeaderboard() {
     if (!window.gameData) return;
 
     container.innerHTML = '';
-    const users = gameData.leaderboard || [];
+    const users = gameData.getLeaderboard(); // sort automatically if using getLeaderboard
 
     users.forEach(user => {
-        const card = document.createElement('div');
-        card.className = 'card';
-
-        // make card clickable
-        card.onclick = () => {
-            window.location.href = `player.html?user=${encodeURIComponent(user.username)}`;
-        };
-
-        // flag image: use user.countryCode (ISO 3166-1 alpha-2)
         const flagUrl = user.countryCode 
             ? `https://flagcdn.com/w20/${user.countryCode.toLowerCase()}.png` 
             : 'https://via.placeholder.com/20x14?text=?';
 
-        card.innerHTML = `
-            <div class="rank">${user.rank}</div>
-            <img class="thumbnail" src="${user.icon || 'images/default-user.png'}">
-            <div class="content">
-                <div class="user">
-                    <img class="flag" src="${flagUrl}" title="${user.country || 'Unknown'}" data-username="${user.username}">
-                    ${user.username}
+        container.innerHTML += `
+            <div class="card" onclick="window.location.href='player.html?user=${encodeURIComponent(user.username)}'">
+                <div class="rank">${user.rank}</div>
+                <img class="thumbnail" src="${user.icon || 'images/default-user.png'}">
+                <div class="content">
+                    <div class="user">
+                        <img class="flag" src="${flagUrl}" title="${user.country || 'Unknown'}" data-username="${user.username}">
+                        ${user.username}
+                    </div>
+                    <div class="points">Points: ${user.points}</div>
                 </div>
-                <div class="points">Points: ${user.points}</div>
             </div>
         `;
-
-        container.appendChild(card);
     });
 }
 
-// Update flag dynamically if setPlayerCountry is called
+// Watch for dynamic country updates
 (function watchFlags() {
     const originalFn = gameData.setPlayerCountry;
     gameData.setPlayerCountry = function(username, countryCode, countryName) {
         originalFn.call(this, username, countryCode, countryName);
-        // update DOM flag
         const flagImgs = document.querySelectorAll(`.flag[data-username="${username}"]`);
         flagImgs.forEach(img => {
             img.src = countryCode
@@ -117,6 +107,7 @@ function renderLeaderboard() {
     };
 })();
 
+// Load levels.js dynamically
 function loadDataScript(callback) {
     const old = document.getElementById('levelsScript');
     if (old) old.remove();

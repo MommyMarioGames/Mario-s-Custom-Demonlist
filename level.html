@@ -130,32 +130,24 @@ function renderLevel() {
         completedByContainer.innerHTML = "<li style='color:#8b949e;'>No one has completed this level yet.</li>";
     } else {
         completedByContainer.innerHTML = completedPlayers.map(p => {
-            // Flag for each player
-            const flagUrl = p.countryCode ? `https://flagcdn.com/w20/${p.countryCode.toLowerCase()}.png` : 'https://via.placeholder.com/20x14?text=?';
+            const flagUrl = p.countryCode
+                ? `https://flagcdn.com/w20/${p.countryCode.toLowerCase()}.png`
+                : 'https://via.placeholder.com/20x14?text=?';
             const videoUrl = p.completionVideos?.[level.id];
-            const videoLink = videoUrl 
-                ? `<a href="${videoUrl}" target="_blank" class="video-link">[Video]</a>` 
+            const videoLink = videoUrl
+                ? `<a href="${videoUrl}" target="_blank" class="video-link">[Video]</a>`
                 : `<span class="video-link no-video">[No video]</span>`;
-            return `<li>
-                        <img src="${flagUrl}" alt="${p.country || 'Unknown'}" class="flag">
-                        <a href="player.html?user=${p.username}">${p.username} (Rank: ${p.rank})</a>${videoLink}
+
+            return `<li style="display:flex; align-items:center; justify-content:space-between;">
+                        <a href="player.html?user=${p.username}" style="display:flex; align-items:center; text-decoration:none; color:inherit;">
+                            <img src="${flagUrl}" alt="${p.country || 'Unknown'}" title="${p.country || 'Unknown'}" class="flag">
+                            <span style="margin-left:6px;">${p.username} (Rank: ${p.rank})</span>
+                        </a>
+                        ${videoLink}
                     </li>`;
         }).join('');
     }
 }
-
-// Load levels.js script
-function loadLevelsScript(callback) {
-    const old = document.getElementById('levelsScript');
-    if (old) old.remove();
-    const script = document.createElement('script');
-    script.id = 'levelsScript';
-    script.src = 'levels.js?v=' + Date.now();
-    script.onload = callback;
-    document.body.appendChild(script);
-}
-
-loadLevelsScript(renderLevel);
 </script>
 
 </body>

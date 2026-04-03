@@ -20,9 +20,9 @@ body {
 .nav .right a { margin-left:20px; text-decoration:none; color:#c9d1d9; }
 .nav .right a.active { background:#2b3240; padding:6px 10px; border-radius:6px; }
 
-.header { padding:40px 20px; }
-.header h1 { font-size:42px; margin:0; display:flex; align-items:center; justify-content:center; }
-.flag { width:32px; height:20px; margin-left:12px; border-radius:4px; object-fit:cover; vertical-align:middle; }
+.header { padding:40px 20px; display:flex; justify-content:center; align-items:center; gap:12px; }
+.header h1 { font-size:42px; margin:0; }
+.flag { width:32px; height:20px; border-radius:4px; object-fit:cover; }
 
 .container { max-width:800px; margin:0 auto; padding:20px; text-align:center; }
 .playerInfo { margin-bottom:30px; }
@@ -81,7 +81,7 @@ body {
 
 <script>
 const params = new URLSearchParams(window.location.search);
-const username = params.get("user"); // e.g., ?user=PlayerOne
+const username = params.get("user");
 
 function renderPlayer() {
     if (!window.gameData) return;
@@ -92,36 +92,28 @@ function renderPlayer() {
         return;
     }
 
+    // Basic info
     document.getElementById("playerName").innerText = player.username;
     document.getElementById("playerRank").innerText = `Rank: ${player.rank}`;
     document.getElementById("playerPoints").innerText = `Points: ${player.points}`;
 
-    // YouTube link
-    const youtubeEl = document.getElementById("playerYoutube");
+    // YouTube
+    const yt = document.getElementById("playerYoutube");
     if (player.youtube) {
-        youtubeEl.href = player.youtube;
-        youtubeEl.innerText = player.youtube;
-        youtubeEl.style.color = "#58a6ff";
+        yt.href = player.youtube;
+        yt.innerText = player.youtube;
+        yt.style.color = "#58a6ff";
     } else {
-        youtubeEl.href = "#";
-        youtubeEl.innerText = "N/A";
-        youtubeEl.style.color = "#8b949e";
+        yt.href = "#";
+        yt.innerText = "N/A";
+        yt.style.color = "#8b949e";
     }
 
     // Country flag
-    let flagEl = document.getElementById("playerFlag");
-    if (!flagEl) {
-        flagEl = document.createElement("img");
-        flagEl.id = "playerFlag";
-        flagEl.style.width = "32px";
-        flagEl.style.height = "20px";
-        flagEl.style.marginRight = "10px";
-        flagEl.style.verticalAlign = "middle";
-        document.getElementById("playerName").prepend(flagEl);
-    }
+    const flagEl = document.getElementById("playerFlag");
     flagEl.src = player.countryCode
         ? `https://flagcdn.com/w20/${player.countryCode.toLowerCase()}.png`
-        : 'https://via.placeholder.com/20x14?text=?';
+        : 'https://via.placeholder.com/32x20?text=?';
     flagEl.title = player.country || 'Unknown';
 
     // Verifications
@@ -130,7 +122,7 @@ function renderPlayer() {
         ? player.verifications.map(v => `<li>${v}</li>`).join("")
         : "<li style='color:#8b949e;'>None yet</li>";
 
-    // Helper for level completions
+    // Level completions
     function renderLevels(ids, containerId) {
         const container = document.getElementById(containerId);
         container.innerHTML = (!ids || ids.length === 0)
@@ -138,35 +130,17 @@ function renderPlayer() {
             : ids.map(id => {
                 const level = gameData.getLevelById(id);
                 return level
-                    ? `<li><a href="level.html?level=${level.id}" style="color:#58a6ff; text-decoration:none;">
-                        ${level.title} (${level.difficulty})
-                      </a></li>`
+                    ? `<li><a href="level.html?level=${level.id}">${level.title} (${level.difficulty})</a></li>`
                     : "";
             }).join("");
     }
 
-    renderLevels(player.mainCompletions || [], "playerMain");
-    renderLevels(player.extendedCompletions || [], "playerExtended");
-    renderLevels(player.legacyCompletions || [], "playerLegacy");
+    renderLevels(player.mainCompletions, "playerMain");
+    renderLevels(player.extendedCompletions, "playerExtended");
+    renderLevels(player.legacyCompletions, "playerLegacy");
 }
 
-// Watch for country updates
-(function watchPlayerFlag() {
-    const originalFn = gameData.setPlayerCountry;
-    gameData.setPlayerCountry = function(username, countryCode, countryName) {
-        originalFn.call(this, username, countryCode, countryName);
-        if (username === window.username) {
-            const flagEl = document.getElementById("playerFlag");
-            if (flagEl) {
-                flagEl.src = countryCode
-                    ? `https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`
-                    : 'https://via.placeholder.com/20x14?text=?';
-                flagEl.title = countryName || 'Unknown';
-            }
-        }
-    };
-})();
-
+// Load levels.js
 function loadGameData(callback) {
     const old = document.getElementById('levelsScript');
     if (old) old.remove();
@@ -177,7 +151,6 @@ function loadGameData(callback) {
     document.body.appendChild(script);
 }
 
-// Initial render
 loadGameData(renderPlayer);
 </script>
 
