@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Level Browser</title>
-
 <style>
 body {
     background: #0b0f14;
@@ -34,6 +33,10 @@ body {
 .section h3 { font-size:18px; margin-bottom:10px; color:#79c0ff; }
 .stat { color:#c9d1d9; margin:4px 0; }
 .tag { display:inline-block; background:#8b1e1e; padding:5px 12px; border-radius:999px; font-size:13px; margin:3px 3px 3px 0; }
+ul { list-style:none; padding-left:0; }
+ul li { background:#11161c; border:1px solid #1f2933; border-radius:8px; padding:6px 12px; margin-bottom:5px; }
+ul li a { color:#58a6ff; text-decoration:none; }
+ul li a:hover { text-decoration:underline; }
 </style>
 </head>
 <body>
@@ -51,7 +54,7 @@ body {
 
 <div class="header">
     <h1>Level Info</h1>
-    <p>you should see a level here...</p>
+    <p>You should see a level here...</p>
 </div>
 
 <div class="container">
@@ -75,6 +78,13 @@ body {
         <h3>Description</h3>
         <div id="levelDescription"></div>
     </div>
+
+    <div class="section">
+        <h3>Completed By</h3>
+        <ul id="levelCompletedBy">
+            <li style="color:#8b949e;">No one has completed this level yet.</li>
+        </ul>
+    </div>
 </div>
 
 <script>
@@ -87,49 +97,42 @@ function renderLevel() {
         return;
     }
 
-    // Combine all level arrays into one list for easy lookup
-    const allLevels = [
-        ...gameData.main,
-        ...gameData.extended,
-        ...gameData.legacy
-    ];
-
+    const allLevels = [...gameData.main, ...gameData.extended, ...gameData.legacy];
     const level = allLevels.find(l => l.id === levelId);
 
-    if (level) {
-        document.getElementById('levelTitle').innerText = level.title;
-        document.getElementById('levelCreator').innerText = `by ${level.creator}`;
-        document.getElementById('levelVideo').src = `https://www.youtube.com/embed/${level.video}`;
-        document.getElementById('levelPoints').innerText = `Points: ${level.points}`;
-        document.getElementById('levelPosition').innerText = `Position: ${level.position}`;
-        document.getElementById('levelDifficulty').innerText = `Difficulty: ${level.difficulty}`;
-        document.getElementById('levelTags').innerHTML =
-            level.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
-        document.getElementById('levelDescription').innerText = level.description;
-
-        // === New: Completed By Section ===
-        const completedByContainer = document.getElementById('levelCompletedBy');
-        const completedPlayers = gameData.leaderboard.filter(player => {
-            return (player.mainCompletions && player.mainCompletions.includes(level.id)) ||
-                   (player.extendedCompletions && player.extendedCompletions.includes(level.id)) ||
-                   (player.legacyCompletions && player.legacyCompletions.includes(level.id));
-        });
-
-        if (completedPlayers.length === 0) {
-            completedByContainer.innerHTML = "<li style='color:#8b949e;'>No one has completed this level yet.</li>";
-        } else {
-            completedByContainer.innerHTML = completedPlayers.map(p => {
-                return `<li><a href="player.html?user=${p.username}" style="color:#58a6ff; text-decoration:none;">
-                            ${p.username} (Rank: ${p.rank})
-                        </a></li>`;
-            }).join('');
-        }
-    } else {
+    if (!level) {
         document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>LEVEL NOT FOUND</h2>";
+        return;
+    }
+
+    // Fill level info
+    document.getElementById('levelTitle').innerText = level.title;
+    document.getElementById('levelCreator').innerText = `by ${level.creator}`;
+    document.getElementById('levelVideo').src = `https://www.youtube.com/embed/${level.video}`;
+    document.getElementById('levelPoints').innerText = `Points: ${level.points}`;
+    document.getElementById('levelPosition').innerText = `Position: ${level.position}`;
+    document.getElementById('levelDifficulty').innerText = `Difficulty: ${level.difficulty}`;
+    document.getElementById('levelTags').innerHTML = level.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+    document.getElementById('levelDescription').innerText = level.description;
+
+    // Completed By
+    const completedByContainer = document.getElementById('levelCompletedBy');
+    const completedPlayers = gameData.leaderboard.filter(player => {
+        return (player.mainCompletions && player.mainCompletions.includes(level.id)) ||
+               (player.extendedCompletions && player.extendedCompletions.includes(level.id)) ||
+               (player.legacyCompletions && player.legacyCompletions.includes(level.id));
+    });
+
+    if (completedPlayers.length === 0) {
+        completedByContainer.innerHTML = "<li style='color:#8b949e;'>No one has completed this level yet.</li>";
+    } else {
+        completedByContainer.innerHTML = completedPlayers.map(p => {
+            return `<li><a href="player.html?user=${p.username}">${p.username} (Rank: ${p.rank})</a></li>`;
+        }).join('');
     }
 }
 
-// Load script + render
+// Load levels.js script
 function loadLevelsScript(callback) {
     const old = document.getElementById('levelsScript');
     if (old) old.remove();
