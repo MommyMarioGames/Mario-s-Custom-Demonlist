@@ -83,6 +83,11 @@ body {
 const params = new URLSearchParams(window.location.search);
 const username = params.get("user");
 
+function getLevelById(id) {
+    const allLevels = [...gameData.main, ...gameData.extended, ...gameData.legacy];
+    return allLevels.find(l => l.id === id);
+}
+
 function renderPlayer() {
     if (!window.gameData) return;
 
@@ -125,14 +130,15 @@ function renderPlayer() {
     // Level completions
     function renderLevels(ids, containerId) {
         const container = document.getElementById(containerId);
-        container.innerHTML = (!ids || ids.length === 0)
-            ? "<li style='color:#8b949e;'>No completions yet.</li>"
-            : ids.map(id => {
-                const level = gameData.getLevelById(id);
-                return level
-                    ? `<li><a href="level.html?level=${level.id}">${level.title} (${level.difficulty})</a></li>`
-                    : "";
-            }).join("");
+        if (!ids || ids.length === 0) {
+            container.innerHTML = "<li style='color:#8b949e;'>No completions yet.</li>";
+            return;
+        }
+        container.innerHTML = ids.map(id => {
+            const level = getLevelById(id);
+            if (!level) return `<li style="color:#8b949e;">Level ID ${id} not found</li>`;
+            return `<li><a href="level.html?level=${level.id}">${level.title} (${level.difficulty})</a></li>`;
+        }).join("");
     }
 
     renderLevels(player.mainCompletions, "playerMain");
@@ -140,18 +146,16 @@ function renderPlayer() {
     renderLevels(player.legacyCompletions, "playerLegacy");
 }
 
-// Load levels.js
-function loadGameData(callback) {
+// Load levels.js and then render
+(function loadGameData(callback){
     const old = document.getElementById('levelsScript');
-    if (old) old.remove();
+    if(old) old.remove();
     const script = document.createElement('script');
     script.id = 'levelsScript';
     script.src = 'levels.js?v=' + Date.now();
     script.onload = callback;
     document.body.appendChild(script);
-}
-
-loadGameData(renderPlayer);
+})(renderPlayer);
 </script>
 
 </body>

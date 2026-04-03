@@ -66,39 +66,43 @@ body {
 <script>
 function renderLeaderboard() {
     const container = document.getElementById('levelList');
-    if (!window.gameData) return;
+    if (!window.gameData || !gameData.leaderboard) return;
 
     container.innerHTML = '';
-    const users = gameData.getLeaderboard(); // sort automatically if using getLeaderboard
 
-    users.forEach(user => {
+    // Use the original array structure
+    gameData.leaderboard.forEach(user => {
         const flagUrl = user.countryCode 
-            ? `https://flagcdn.com/w20/${user.countryCode.toLowerCase()}.png` 
+            ? `https://flagcdn.com/w20/${user.countryCode.toLowerCase()}.png`
             : 'https://via.placeholder.com/20x14?text=?';
 
-        container.innerHTML += `
-            <div class="card" onclick="window.location.href='player.html?user=${encodeURIComponent(user.username)}'">
-                <div class="rank">${user.rank}</div>
-                <img class="thumbnail" src="${user.icon || 'images/default-user.png'}">
-                <div class="content">
-                    <div class="user">
-                        <img class="flag" src="${flagUrl}" title="${user.country || 'Unknown'}" data-username="${user.username}">
-                        ${user.username}
-                    </div>
-                    <div class="points">Points: ${user.points}</div>
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.onclick = () => window.location.href = `player.html?user=${encodeURIComponent(user.username)}`;
+
+        card.innerHTML = `
+            <div class="rank">${user.rank}</div>
+            <img class="thumbnail" src="${user.icon || 'images/default-user.png'}">
+            <div class="content">
+                <div class="user">
+                    <img class="flag" src="${flagUrl}" title="${user.country || 'Unknown'}" data-username="${user.username}">
+                    ${user.username}
                 </div>
+                <div class="points">Points: ${user.points}</div>
             </div>
         `;
+        container.appendChild(card);
     });
 }
 
-// Watch for dynamic country updates
+// Keep flags dynamic for player updates
 (function watchFlags() {
+    if (!window.gameData) return;
     const originalFn = gameData.setPlayerCountry;
     gameData.setPlayerCountry = function(username, countryCode, countryName) {
         originalFn.call(this, username, countryCode, countryName);
-        const flagImgs = document.querySelectorAll(`.flag[data-username="${username}"]`);
-        flagImgs.forEach(img => {
+        const imgs = document.querySelectorAll(`.flag[data-username="${username}"]`);
+        imgs.forEach(img => {
             img.src = countryCode
                 ? `https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`
                 : 'https://via.placeholder.com/20x14?text=?';
@@ -107,11 +111,9 @@ function renderLeaderboard() {
     };
 })();
 
-// Load levels.js dynamically
 function loadDataScript(callback) {
     const old = document.getElementById('levelsScript');
     if (old) old.remove();
-
     const script = document.createElement('script');
     script.id = 'levelsScript';
     script.src = 'levels.js?v=' + Date.now();

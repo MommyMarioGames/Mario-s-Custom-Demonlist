@@ -13,12 +13,7 @@ body {
     padding: 0;
     text-align: center;
 }
-.nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 30px;
-    border-bottom: 1px solid #1f2933;
-}
+.nav { display: flex; justify-content: space-between; padding: 15px 30px; border-bottom: 1px solid #1f2933; }
 .nav .left { font-weight: bold; color:#58a6ff; }
 .nav .right a { margin-left:20px; text-decoration:none; color:#c9d1d9; }
 .nav .right a.active { background:#2b3240; padding:6px 10px; border-radius:6px; }
@@ -34,9 +29,8 @@ body {
 .stat { color:#c9d1d9; margin:4px 0; }
 .tag { display:inline-block; background:#8b1e1e; padding:5px 12px; border-radius:999px; font-size:13px; margin:3px 3px 3px 0; }
 ul { list-style:none; padding-left:0; }
-ul li { background:#11161c; border:1px solid #1f2933; border-radius:8px; padding:6px 12px; margin-bottom:5px; }
-ul li a { color:#58a6ff; text-decoration:none; }
-ul li a:hover { text-decoration:underline; }
+ul li { background:#11161c; border:1px solid #1f2933; border-radius:8px; padding:6px 12px; margin-bottom:5px; display:flex; align-items:center; justify-content:space-between; }
+ul li a { text-decoration:none; color:inherit; display:flex; align-items:center; }
 .video-link { font-size:13px; margin-left:5px; color:#58a6ff; text-decoration:none; }
 .video-link.no-video { color:#8b949e; }
 .flag { width:20px; height:14px; vertical-align:middle; margin-right:6px; border-radius:3px; }
@@ -48,8 +42,8 @@ ul li a:hover { text-decoration:underline; }
     <div class="left"><a href="index.html">Mario's Custom Demonlist</a></div>
     <div class="right">
         <a href="main.html">Main List</a>
-        <a href="#">Extended</a>
-        <a href="#">Legacy</a>
+        <a href="extended.html">Extended</a>
+        <a href="legacy.html">Legacy</a>
         <a href="leaderboard.html">Leaderboard</a>
         <a href="#">Submit</a>
     </div>
@@ -138,16 +132,28 @@ function renderLevel() {
                 ? `<a href="${videoUrl}" target="_blank" class="video-link">[Video]</a>`
                 : `<span class="video-link no-video">[No video]</span>`;
 
-            return `<li style="display:flex; align-items:center; justify-content:space-between;">
-                        <a href="player.html?user=${p.username}" style="display:flex; align-items:center; text-decoration:none; color:inherit;">
+            return `<li>
+                        <a href="player.html?user=${p.username}">
                             <img src="${flagUrl}" alt="${p.country || 'Unknown'}" title="${p.country || 'Unknown'}" class="flag">
-                            <span style="margin-left:6px;">${p.username} (Rank: ${p.rank})</span>
+                            ${p.username} (Rank: ${p.rank})
                         </a>
                         ${videoLink}
                     </li>`;
         }).join('');
     }
 }
+
+// Load levels.js then render
+(function loadLevelsScript(callback){
+    const old = document.getElementById('levelsScript');
+    if(old) old.remove();
+
+    const script = document.createElement('script');
+    script.id = 'levelsScript';
+    script.src = 'levels.js?v=' + Date.now();
+    script.onload = callback;
+    document.body.appendChild(script);
+})(renderLevel);
 </script>
 
 </body>
