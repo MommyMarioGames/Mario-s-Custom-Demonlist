@@ -79,11 +79,9 @@ body {
 
 <script>
 function loadLevelsScript(callback) {
-    // remove old script if it exists
     const old = document.getElementById('levelsScript');
     if (old) old.remove();
 
-    // create new script
     const script = document.createElement('script');
     script.id = 'levelsScript';
     script.src = 'levels.js?v=' + Date.now();
@@ -96,7 +94,6 @@ function renderLevel() {
     const params = new URLSearchParams(window.location.search);
     const levelId = Number(params.get('level'));
 
-    // check if levels loaded
     if (!window.levels) {
         console.error("levels is NOT loaded");
         return;
@@ -119,11 +116,8 @@ function renderLevel() {
     }
 }
 
-// load + render
+// load once
 loadLevelsScript(renderLevel);
-
-// optional live update
-setInterval(() => loadLevelsScript(renderLevel), 5000);
 </script>
 
 </body>
