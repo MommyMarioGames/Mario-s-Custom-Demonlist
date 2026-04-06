@@ -6,15 +6,15 @@ window.gameData = {
     main: [
         {
             id: 1,
-            title: "1. RobTimBo",
-            creator: "BowlOfJelly",
+            title: "1. Nostalgic Travel",
+            creator: "TeamThrowback",
             thumbnail: "images/96455699.webp",
-            video: "-LpHxwAR8iA",
+            video: "y-_ZC5_PXvY",
             points: 250,
             position: 1,
-            difficulty: "Hard Demon",
-            tags: ["Limbo Inspired"],
-            description: `Is this what Limbo would look like if RobTop made it? | My last level for 2.1, enjoy! | OG from Muplan's video: "What if RobTop made Limbo".`
+            difficulty: "Easy Demon",
+            tags: ["uhhhhhhhhhhhh"],
+            description: `Team Throwback's third official level! This is a 1.0 themed travel level, which features 22 unique different creators! Enjoy! :D".`
         },
         {
             id: 2,
@@ -30,15 +30,15 @@ window.gameData = {
         },
 	{
 	    id: 3,
-            title: "3. Nostalgic Travel",
-            creator: "TeamThrowback",
+            title: "3. RobTimBo",
+            creator: "BowlOfJelly",
             thumbnail: "images/96455699.webp",
             video: "y-_ZC5_PXvY",
             points: 150,
             position: 3,
-            difficulty: "Easy Demon",
-            tags: ["uhhhhhh"],
-            description: `Team Throwback's third official level! This is a 1.0 themed travel level, which features 22 unique different creators! Enjoy! :D`
+            difficulty: "Hard Demon",
+            tags: ["Limbo Inspired"],
+            description: `Is this what Limbo would look like if RobTop made it? | My last level for 2.1, enjoy! | OG from Muplan's video: "What if RobTop made Limbo`
 
 	},
 	{
