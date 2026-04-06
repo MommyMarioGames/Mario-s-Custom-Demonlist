@@ -18,16 +18,27 @@ window.gameData = {
         },
         {
             id: 2,
-            title: "2. Ruta del Sol",
-            creator: "TroxxP1",
+            title: "2. Change of Scene",
+            creator: "bli",
             thumbnail: "images/83323273.webp",
-            video: "X9EDM90XBFI",
+            video: "alafxkFTprU",
             points: 200,
             position: 2,
             difficulty: "Easy Demon",
+            tags: ["Must Play - List Mods"],
+            description: `Discord Gauntlet Contest entry, enjoy. You can find the full showcase with all coins on my yt channel. (2/2024 updated to fix various bugs related to 2.2)`
+        }
+	{
+  	    id: 3,
+            title: "3. Ruta del Sol",
+            creator: "TroxxP1",
+            thumbnail: "images/83323273.webp",
+            video: "X9EDM90XBFI",
+            points: 150,
+            position: 3,
+            difficulty: "Easy Demon",
             tags: ["Mario Can't See"],
             description: `[Peruvian WGC entry - 1st place] - [creators: TroxxP1, iThunder12, PlantPoint, Aquaerum & Polli]`
-        }
     ],
 
     // =========================
@@ -71,14 +82,14 @@ window.gameData = {
     // =========================
     leaderboard: [
         {
-            username: "Nova",
-            points: 500,
+            username: "MarioGames",
+            points: 450,
             rank: 1,
-            youtube: "https://www.youtube.com/@ItzNova04",
-            verifications: ["spammer", "top 1 ping spammer"],
-            mainCompletions: [1, 2],
-            extendedCompletions: [101],
-            legacyCompletions: [201],
+            youtube: "https://www.youtube.com/@MarioGaming27401",
+            verifications: ["", "dih"],
+            mainCompletions: [1, 2, 3],
+            extendedCompletions: [],
+            legacyCompletions: [],
             countryCode: "US",
             country: "United States",
             completionVideos: {
@@ -89,8 +100,8 @@ window.gameData = {
             }
         },
         {
-            username: "PlayerTwo",
-            points: 420,
+            username: "Duxo",
+            points: 200,
             rank: 2,
             youtube: "https://youtube.com/PlayerTwo",
             verifications: ["Verified ✅"],
