@@ -71,11 +71,11 @@ window.gameData = {
     // =========================
     leaderboard: [
         {
-            username: "PlayerOne",
+            username: "Nova",
             points: 500,
             rank: 1,
-            youtube: "https://youtube.com/PlayerOne",
-            verifications: ["insert verification", "top 67 player"],
+            youtube: "https://www.youtube.com/@ItzNova04",
+            verifications: ["spammer", "top 1 ping spammer"],
             mainCompletions: [1, 2],
             extendedCompletions: [101],
             legacyCompletions: [201],
