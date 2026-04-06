@@ -107,9 +107,7 @@ window.gameData = {
             countryCode: "US",
             country: "United States",
             completionVideos: {
-                2: "https://www.youtube.com/watch?v=alafxkFTprU",
-                3: "https://www.youtube.com/watch?v=y-_ZC5_PXvY",
-                4: "https://www.youtube.com/watch?v=X9EDM90XBFI"
+                2: "https://www.youtube.com/watch?v=WT5Ti-GBhsU"
             }
         },
         {
