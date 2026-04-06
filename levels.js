@@ -84,47 +84,44 @@ window.gameData = {
     leaderboard: [
         {
             username: "MarioGames",
+	    pfp: "https://cdn.discordapp.com/avatars/651976169759047700/947a48b24f21dc90ee86fb5299543121.webp?size=64",
             points: 450,
             rank: 1,
             youtube: "https://www.youtube.com/@MarioGaming27401",
-            verifications: ["", "dih"],
+            verifications: ["dih"],
             mainCompletions: [1, 2, 3],
             extendedCompletions: [],
             legacyCompletions: [],
             countryCode: "US",
             country: "United States",
-            completionVideos: {
-                1: "https://youtu.be/-LpHxwAR8iA",
-                2: "",
-                101: "",
-                201: ""
-            }
+            completionVideos: {}
         },
         {
             username: "Duxo",
+	    pfp: "https://cdn.discordapp.com/avatars/747615038528815276/547987ef3e4a79f92ce4596486a860a1.webp?size=64",
             points: 200,
             rank: 2,
             youtube: "https://youtube.com/PlayerTwo",
-            verifications: ["Verified ✅"],
+            verifications: [""],
             mainCompletions: [2],
             extendedCompletions: [],
             legacyCompletions: [],
-            countryCode: "PE",
-            country: "Peru",
+            countryCode: "GB",
+            country: "United Kingdom",
             completionVideos: {2: ""}
         },
         {
-            username: "PlayerThree",
-            points: 390,
+            username: "placeholder",
+            points: 0,
             rank: 3,
-            youtube: "https://youtube.com/PlayerThree",
+            youtube: "",
             verifications: [],
             mainCompletions: [],
-            extendedCompletions: [101],
+            extendedCompletions: [],
             legacyCompletions: [],
-            countryCode: "GB",
-            country: "United Kingdom",
-            completionVideos: {101: ""}
+            countryCode: "UMI",
+            country: "United States Minor Outlying Islands",
+            completionVideos: {}
         }
     ],
 

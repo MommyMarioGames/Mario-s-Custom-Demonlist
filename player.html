@@ -20,9 +20,22 @@ body {
 .nav .right a { margin-left:20px; text-decoration:none; color:#c9d1d9; }
 .nav .right a.active { background:#2b3240; padding:6px 10px; border-radius:6px; }
 
-.header { padding:40px 20px; display:flex; justify-content:center; align-items:center; gap:12px; }
+.header {
+    padding:40px 20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:16px;
+}
 .header h1 { font-size:42px; margin:0; }
 .flag { width:32px; height:20px; border-radius:4px; object-fit:cover; }
+.pfp {
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #1f2933;
+}
 
 .container { max-width:800px; margin:0 auto; padding:20px; text-align:center; }
 .playerInfo { margin-bottom:30px; }
@@ -55,6 +68,7 @@ body {
 </div>
 
 <div class="header">
+    <img id="playerPFP" class="pfp" src="https://via.placeholder.com/80" alt="Player PFP">
     <h1 id="playerName">Player Name</h1>
     <img id="playerFlag" class="flag" src="https://via.placeholder.com/32x20?text=?" title="Unknown">
 </div>
@@ -120,6 +134,10 @@ function renderPlayer() {
         ? `https://flagcdn.com/w20/${player.countryCode.toLowerCase()}.png`
         : 'https://via.placeholder.com/32x20?text=?';
     flagEl.title = player.country || 'Unknown';
+
+    // Profile picture
+    const pfpEl = document.getElementById("playerPFP");
+    pfpEl.src = player.pfp ? player.pfp : "https://via.placeholder.com/80?text=?";
 
     // Verifications
     const verifContainer = document.getElementById("playerVerified");

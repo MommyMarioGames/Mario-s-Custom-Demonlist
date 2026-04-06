@@ -20,7 +20,7 @@ body {
 .nav .right a.active { background:#2b3240; padding:6px 10px; border-radius:6px; }
 .header { text-align:center; padding:40px 20px; }
 .header h1 { font-size:42px; margin:0; }
-.header p { color:#8b949e; }
+.header p { color:#8b949e; margin-top:6px; }
 .list { max-width:900px; margin:auto; padding:20px; }
 .card {
     display:flex; align-items:center;
@@ -30,14 +30,14 @@ body {
 }
 .card:hover { background:#1f2330; }
 .rank { font-size:24px; font-weight:bold; width:50px; text-align:center; color:#79c0ff; }
-.thumbnail { width:80px; height:80px; border-radius:50%; background:#222; object-fit:cover; margin-right:15px; }
-.flag { width:32px; height:20px; margin-right:10px; border-radius:4px; object-fit:cover; vertical-align:middle; }
+.pfp { width:60px; height:60px; border-radius:50%; object-fit:cover; margin-right:15px; border:2px solid #1f2933; }
+.flag { width:32px; height:20px; margin-right:8px; border-radius:4px; object-fit:cover; vertical-align:middle; }
 .content { flex:1; display:flex; flex-direction:column; }
-.user { font-size:20px; color:#79c0ff; display:flex; align-items:center; }
+.user { font-size:20px; color:#79c0ff; display:flex; align-items:center; gap:6px; }
 .points { font-size:14px; color:#8b949e; margin-top:5px; }
 @media (max-width:600px) {
     .card { flex-direction:column; align-items:flex-start; }
-    .thumbnail { margin:0 0 10px 0; }
+    .pfp { margin:0 0 10px 0; }
     .rank { width:auto; margin-bottom:5px; }
     .user { font-size:18px; }
 }
@@ -61,16 +61,14 @@ body {
     <p>See who’s on top!</p>
 </div>
 
-<div class="list" id="levelList"></div>
+<div class="list" id="leaderboardList"></div>
 
 <script>
 function renderLeaderboard() {
-    const container = document.getElementById('levelList');
+    const container = document.getElementById('leaderboardList');
     if (!window.gameData || !gameData.leaderboard) return;
-
     container.innerHTML = '';
 
-    // Use the original array structure
     gameData.leaderboard.forEach(user => {
         const flagUrl = user.countryCode 
             ? `https://flagcdn.com/w20/${user.countryCode.toLowerCase()}.png`
@@ -80,12 +78,14 @@ function renderLeaderboard() {
         card.className = 'card';
         card.onclick = () => window.location.href = `player.html?user=${encodeURIComponent(user.username)}`;
 
+        const pfpUrl = user.pfp ? user.pfp : 'https://via.placeholder.com/60?text=?';
+
         card.innerHTML = `
             <div class="rank">${user.rank}</div>
-            <img class="thumbnail" src="${user.icon || 'images/default-user.png'}">
+            <img class="pfp" src="${pfpUrl}" alt="${user.username}'s PFP">
             <div class="content">
                 <div class="user">
-                    <img class="flag" src="${flagUrl}" title="${user.country || 'Unknown'}" data-username="${user.username}">
+                    <img class="flag" src="${flagUrl}" title="${user.country || 'Unknown'}">
                     ${user.username}
                 </div>
                 <div class="points">Points: ${user.points}</div>
@@ -95,18 +95,20 @@ function renderLeaderboard() {
     });
 }
 
-// Keep flags dynamic for player updates
+// Keep flags dynamic if countries update
 (function watchFlags() {
     if (!window.gameData) return;
     const originalFn = gameData.setPlayerCountry;
     gameData.setPlayerCountry = function(username, countryCode, countryName) {
         originalFn.call(this, username, countryCode, countryName);
-        const imgs = document.querySelectorAll(`.flag[data-username="${username}"]`);
+        const imgs = document.querySelectorAll(`.flag`);
         imgs.forEach(img => {
-            img.src = countryCode
-                ? `https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`
-                : 'https://via.placeholder.com/20x14?text=?';
-            img.title = countryName || 'Unknown';
+            if (img.title === username || img.dataset.username === username) {
+                img.src = countryCode
+                    ? `https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`
+                    : 'https://via.placeholder.com/20x14?text=?';
+                img.title = countryName || 'Unknown';
+            }
         });
     };
 })();
