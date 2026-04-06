@@ -106,7 +106,11 @@ window.gameData = {
             legacyCompletions: [],
             countryCode: "US",
             country: "United States",
-            completionVideos: {1: "https://www.youtube.com/watch?v=WT5Ti-GBhsU"}
+            completionVideos: {
+                2: "https://www.youtube.com/watch?v=alafxkFTprU",
+                3: "https://www.youtube.com/watch?v=y-_ZC5_PXvY",
+                4: "https://www.youtube.com/watch?v=X9EDM90XBFI"
+            }
         },
         {
             username: "Duxo",
@@ -115,12 +119,16 @@ window.gameData = {
             rank: 1,
             youtube: "https://www.youtube.com/@Duxo._.W",
             verifications: ["No Verifications."],
-            mainCompletions: [2, 3, 1],
+            mainCompletions: [1, 2, 3],
             extendedCompletions: [],
             legacyCompletions: [],
             countryCode: "GB",
             country: "United Kingdom",
-            completionVideos: {2: ""}
+            completionVideos: {
+                1: "https://www.youtube.com/watch?v=WT5Ti-GBhsU",
+                2: "https://www.youtube.com/watch?v=alafxkFTprU",
+                3: "https://www.youtube.com/watch?v=y-_ZC5_PXvY"
+            }
         },
         {
             username: "placeholder",
