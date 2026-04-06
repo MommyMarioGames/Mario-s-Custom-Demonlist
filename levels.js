@@ -102,7 +102,7 @@ window.gameData = {
             rank: 1,
             youtube: "https://www.youtube.com/@MarioGaming27401",
             verifications: ["dih"],
-            mainCompletions: [1, 2, 3],
+            mainCompletions: [2, 3, 4],
             extendedCompletions: [],
             legacyCompletions: [],
             countryCode: "US",
