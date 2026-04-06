@@ -27,7 +27,7 @@ window.gameData = {
             difficulty: "Easy Demon",
             tags: ["Must Play - List Mods"],
             description: `Discord Gauntlet Contest entry, enjoy. You can find the full showcase with all coins on my yt channel. (2/2024 updated to fix various bugs related to 2.2)`
-        }
+        },
 	{
   	    id: 3,
             title: "3. Ruta del Sol",
@@ -39,6 +39,7 @@ window.gameData = {
             difficulty: "Easy Demon",
             tags: ["Mario Can't See"],
             description: `[Peruvian WGC entry - 1st place] - [creators: TroxxP1, iThunder12, PlantPoint, Aquaerum & Polli]`
+	}
     ],
 
     // =========================
