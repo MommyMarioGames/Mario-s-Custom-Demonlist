@@ -5,7 +5,7 @@ window.gameData = {
     // =========================
     main: [
         {
-            id: 1,
+            id: 51616869,
             title: "1. Nostalgic Travel",
             creator: "TeamThrowback",
             thumbnail: "images/51616869.webp",
@@ -17,7 +17,7 @@ window.gameData = {
             description: `Team Throwback's third official level! This is a 1.0 themed travel level, which features 22 unique different creators! Enjoy! :D`
         },
         {
-            id: 2,
+            id: 90475473,
             title: "2. Change of Scene",
             creator: "bli",
             thumbnail: "images/90475473.webp",
@@ -41,7 +41,7 @@ window.gameData = {
             description: `Is this what Limbo would look like if RobTop made it? | My last level for 2.1, enjoy! | OG from Muplan's video: "What if RobTop made Limbo"`
         },
         {
-            id: 4,
+            id: 83323273,
             title: "4. Ruta del Sol",
             creator: "TroxxP1",
             thumbnail: "images/83323273.webp",
