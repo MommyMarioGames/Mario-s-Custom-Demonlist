@@ -107,7 +107,7 @@ window.gameData = {
             legacyCompletions: [],
             countryCode: "US",
             country: "United States",
-            completionVideos: {1: "https://www.youtube.com/watch?v=WT5Ti-GBhsU",}
+            completionVideos: {1: "https://www.youtube.com/watch?v=WT5Ti-GBhsU"}
         },
         {
             username: "Duxo",

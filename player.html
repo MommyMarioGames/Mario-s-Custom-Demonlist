@@ -50,7 +50,7 @@ body {
 .completions h3 { color:#79c0ff; margin-bottom:6px; }
 .completions ul { list-style:none; padding-left:0; }
 .completions li { background:#11161c; padding:8px 12px; margin-bottom:5px; border-radius:8px; border:1px solid #1f2933; }
-.completions li a { color:#58a6ff; text-decoration:none; }
+.completions li a { color:#58a6ff; text-decoration:none; margin-left:8px; }
 .completions li a:hover { text-decoration:underline; }
 </style>
 </head>
@@ -145,17 +145,24 @@ function renderPlayer() {
         ? player.verifications.map(v => `<li>${v}</li>`).join("")
         : "<li style='color:#8b949e;'>None yet</li>";
 
-    // Level completions
+    // Render levels with optional completion videos
     function renderLevels(ids, containerId) {
         const container = document.getElementById(containerId);
         if (!ids || ids.length === 0) {
             container.innerHTML = "<li style='color:#8b949e;'>No completions yet.</li>";
             return;
         }
+
         container.innerHTML = ids.map(id => {
             const level = getLevelById(id);
             if (!level) return `<li style="color:#8b949e;">Level ID ${id} not found</li>`;
-            return `<li><a href="level.html?level=${level.id}">${level.title} (${level.difficulty})</a></li>`;
+
+            const videoUrl = player.completionVideos && player.completionVideos[id] ? player.completionVideos[id] : null;
+            const videoLink = videoUrl ? `<a href="${videoUrl}" target="_blank">[Watch]</a>` : "";
+
+            return `<li>
+                        <a href="level.html?level=${level.id}">${level.title} (${level.difficulty})</a>${videoLink}
+                    </li>`;
         }).join("");
     }
 
@@ -164,7 +171,7 @@ function renderPlayer() {
     renderLevels(player.legacyCompletions, "playerLegacy");
 }
 
-// Load levels.js and then render
+// Load levels.js then render
 (function loadGameData(callback){
     const old = document.getElementById('levelsScript');
     if(old) old.remove();

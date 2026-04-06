@@ -13,26 +13,30 @@ body {
     padding: 0;
     text-align: center;
 }
-.nav { display: flex; justify-content: space-between; padding: 15px 30px; border-bottom: 1px solid #1f2933; }
-.nav .left { font-weight: bold; color:#58a6ff; }
+.nav { display:flex; justify-content:space-between; padding:15px 30px; border-bottom:1px solid #1f2933; }
+.nav .left { font-weight:bold; color:#58a6ff; }
 .nav .right a { margin-left:20px; text-decoration:none; color:#c9d1d9; }
 .nav .right a.active { background:#2b3240; padding:6px 10px; border-radius:6px; }
-.header { text-align: center; padding: 30px 20px; }
+
+.header { padding:30px 20px; text-align:center; }
 .header h1 { font-size:42px; margin:0; }
-.header p { color:#8b949e; }
-.container { max-width: 900px; margin: 0 auto 50px auto; padding: 20px; text-align: center; }
-.title { font-size: 36px; font-weight: bold; color: #79c0ff; margin-bottom: 5px; }
+.header p { color:#8b949e; margin-top:6px; }
+
+.container { max-width:900px; margin:0 auto 50px auto; padding:20px; text-align:center; }
+.title { font-size:36px; font-weight:bold; color:#79c0ff; margin-bottom:5px; }
 .creator { font-size:16px; color:#8b949e; margin-bottom:20px; }
 .video { width:100%; max-width:800px; height:480px; border-radius:10px; border:none; margin-bottom:30px; }
+
 .section { margin-bottom:30px; text-align:left; }
 .section h3 { font-size:18px; margin-bottom:10px; color:#79c0ff; }
 .stat { color:#c9d1d9; margin:4px 0; }
+
 .tag { display:inline-block; background:#8b1e1e; padding:5px 12px; border-radius:999px; font-size:13px; margin:3px 3px 3px 0; }
 ul { list-style:none; padding-left:0; }
-ul li { background:#11161c; border:1px solid #1f2933; border-radius:8px; padding:6px 12px; margin-bottom:5px; display:flex; align-items:center; justify-content:space-between; }
+ul li { background:#11161c; border:1px solid #1f2933; border-radius:8px; padding:6px 12px; margin-bottom:5px; display:flex; justify-content:space-between; align-items:center; }
 ul li a { text-decoration:none; color:inherit; display:flex; align-items:center; }
 .video-link { font-size:13px; margin-left:5px; color:#58a6ff; text-decoration:none; }
-.video-link.no-video { color:#8b949e; }
+.video-link.no-video { color:#8b949e; cursor:default; }
 .flag { width:20px; height:14px; vertical-align:middle; margin-right:6px; border-radius:3px; }
 </style>
 </head>
@@ -50,8 +54,8 @@ ul li a { text-decoration:none; color:inherit; display:flex; align-items:center;
 </div>
 
 <div class="header">
-    <h1>Level Info</h1>
-    <p>You should see a level here...</p>
+    <h1 id="levelHeader">Level Info</h1>
+    <p id="levelSubtitle">Loading level details...</p>
 </div>
 
 <div class="container">
@@ -98,7 +102,8 @@ function renderLevel() {
     const level = allLevels.find(l => l.id === levelId);
 
     if (!level) {
-        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>LEVEL NOT FOUND</h2>";
+        document.getElementById('levelHeader').innerText = "LEVEL NOT FOUND";
+        document.getElementById('levelSubtitle').innerText = "";
         return;
     }
 
@@ -115,18 +120,16 @@ function renderLevel() {
     // Completed By
     const completedByContainer = document.getElementById('levelCompletedBy');
     const completedPlayers = gameData.leaderboard.filter(player => {
-        return (player.mainCompletions && player.mainCompletions.includes(level.id)) ||
-               (player.extendedCompletions && player.extendedCompletions.includes(level.id)) ||
-               (player.legacyCompletions && player.legacyCompletions.includes(level.id));
+        return (player.mainCompletions?.includes(level.id)) ||
+               (player.extendedCompletions?.includes(level.id)) ||
+               (player.legacyCompletions?.includes(level.id));
     });
 
     if (completedPlayers.length === 0) {
         completedByContainer.innerHTML = "<li style='color:#8b949e;'>No one has completed this level yet.</li>";
     } else {
         completedByContainer.innerHTML = completedPlayers.map(p => {
-            const flagUrl = p.countryCode
-                ? `https://flagcdn.com/w20/${p.countryCode.toLowerCase()}.png`
-                : 'https://via.placeholder.com/20x14?text=?';
+            const flagUrl = p.countryCode ? `https://flagcdn.com/w20/${p.countryCode.toLowerCase()}.png` : 'https://via.placeholder.com/20x14?text=?';
             const videoUrl = p.completionVideos?.[level.id];
             const videoLink = videoUrl
                 ? `<a href="${videoUrl}" target="_blank" class="video-link">[Video]</a>`
@@ -141,6 +144,8 @@ function renderLevel() {
                     </li>`;
         }).join('');
     }
+
+    document.getElementById('levelSubtitle').innerText = `Level ID: ${level.id}`;
 }
 
 // Load levels.js then render
