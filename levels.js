@@ -20,7 +20,7 @@ window.gameData = {
             id: 2,
             title: "2. Change of Scene",
             creator: "bli",
-            thumbnail: "images/83323273.webp",
+            thumbnail: "images/90475473.webp",
             video: "alafxkFTprU",
             points: 200,
             position: 2,
@@ -29,13 +29,26 @@ window.gameData = {
             description: `Discord Gauntlet Contest entry, enjoy. You can find the full showcase with all coins on my yt channel. (2/2024 updated to fix various bugs related to 2.2)`
         },
 	{
-  	    id: 3,
-            title: "3. Ruta del Sol",
+	    id: 3,
+            title: "3. Nostalgic Travel",
+            creator: "TeamThrowback",
+            thumbnail: "images/96455699.webp",
+            video: "y-_ZC5_PXvY",
+            points: 150,
+            position: 3,
+            difficulty: "Easy Demon",
+            tags: ["uhhhhhh"],
+            description: `Team Throwback's third official level! This is a 1.0 themed travel level, which features 22 unique different creators! Enjoy! :D`
+
+	},
+	{
+  	    id: 4,
+            title: "4. Ruta del Sol",
             creator: "TroxxP1",
             thumbnail: "images/83323273.webp",
             video: "X9EDM90XBFI",
-            points: 150,
-            position: 3,
+            points: 100,
+            position: 4,
             difficulty: "Easy Demon",
             tags: ["Mario Can't See"],
             description: `[Peruvian WGC entry - 1st place] - [creators: TroxxP1, iThunder12, PlantPoint, Aquaerum & Polli]`
