@@ -8,7 +8,7 @@ window.gameData = {
             id: 1,
             title: "1. Nostalgic Travel",
             creator: "TeamThrowback",
-            thumbnail: "images/96455699.webp",
+            thumbnail: "images/51616869.webp",
             video: "y-_ZC5_PXvY",
             points: 250,
             position: 1,
