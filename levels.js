@@ -60,15 +60,15 @@ window.gameData = {
     extended: [
         {
             id: 101,
-            title: "Extended Level 1",
-            creator: "X",
+            title: "skeltion (placeholder)",
+            creator: "travis scot",
             thumbnail: "images/extended1.webp",
-            video: "abcd1234",
+            video: "glfUnq0rXso",
             points: 150,
             position: 1,
             difficulty: "Medium",
             tags: ["Extended"],
-            description: "An extended level example."
+            description: "hey wait a minute kanye go away you fucking bum"
         }
     ],
 
@@ -78,15 +78,15 @@ window.gameData = {
     legacy: [
         {
             id: 201,
-            title: "Legacy Level 1",
-            creator: "Old",
+            title: "wow its a legacy level",
+            creator: "kanye??",
             thumbnail: "images/legacy1.webp",
-            video: "efgh5678",
+            video: "zDjpcmvZbTM",
             points: 100,
             position: 1,
-            difficulty: "Easy",
+            difficulty: "ye",
             tags: ["Legacy"],
-            description: "An old legacy level example."
+            description: "kanye go away i already listened to your album bud"
         }
     ],
 
