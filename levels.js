@@ -14,7 +14,7 @@ window.gameData = {
             position: 1,
             difficulty: "Easy Demon",
             tags: ["uhhhhhhhhhhhh"],
-            description: `Team Throwback's third official level! This is a 1.0 themed travel level, which features 22 unique different creators! Enjoy! :D".`
+            description: `Team Throwback's third official level! This is a 1.0 themed travel level, which features 22 unique different creators! Enjoy! :D`
         },
         {
             id: 2,
@@ -28,8 +28,8 @@ window.gameData = {
             tags: ["Must Play - List Mods"],
             description: `Discord Gauntlet Contest entry, enjoy. You can find the full showcase with all coins on my yt channel. (2/2024 updated to fix various bugs related to 2.2)`
         },
-	{
-	    id: 3,
+        {
+            id: 3,
             title: "3. RobTimBo",
             creator: "BowlOfJelly",
             thumbnail: "images/96455699.webp",
@@ -38,11 +38,10 @@ window.gameData = {
             position: 3,
             difficulty: "Hard Demon",
             tags: ["Limbo Inspired"],
-            description: `Is this what Limbo would look like if RobTop made it? | My last level for 2.1, enjoy! | OG from Muplan's video: "What if RobTop made Limbo`
-
-	},
-	{
-  	    id: 4,
+            description: `Is this what Limbo would look like if RobTop made it? | My last level for 2.1, enjoy! | OG from Muplan's video: "What if RobTop made Limbo"`
+        },
+        {
+            id: 4,
             title: "4. Ruta del Sol",
             creator: "TroxxP1",
             thumbnail: "images/83323273.webp",
@@ -52,7 +51,7 @@ window.gameData = {
             difficulty: "Easy Demon",
             tags: ["Mario Can't See"],
             description: `[Peruvian WGC entry - 1st place] - [creators: TroxxP1, iThunder12, PlantPoint, Aquaerum & Polli]`
-	}
+        }
     ],
 
     // =========================
@@ -97,7 +96,7 @@ window.gameData = {
     leaderboard: [
         {
             username: "MarioGames",
-	    pfp: "https://cdn.discordapp.com/avatars/651976169759047700/947a48b24f21dc90ee86fb5299543121.webp?size=64",
+            pfp: "https://cdn.discordapp.com/avatars/651976169759047700/947a48b24f21dc90ee86fb5299543121.webp?size=64",
             points: 450,
             rank: 2,
             youtube: "https://www.youtube.com/@MarioGaming27401",
@@ -111,11 +110,11 @@ window.gameData = {
         },
         {
             username: "Duxo",
-	    pfp: "https://cdn.discordapp.com/avatars/747615038528815276/547987ef3e4a79f92ce4596486a860a1.webp?size=64",
+            pfp: "https://cdn.discordapp.com/avatars/747615038528815276/547987ef3e4a79f92ce4596486a860a1.webp?size=64",
             points: 600,
             rank: 1,
             youtube: "https://www.youtube.com/@Duxo._.W",
-            verifications: ["No Verfications."],
+            verifications: ["No Verifications."],
             mainCompletions: [2, 3, 1],
             extendedCompletions: [],
             legacyCompletions: [],
@@ -125,6 +124,7 @@ window.gameData = {
         },
         {
             username: "placeholder",
+            pfp: "",
             points: 0,
             rank: 3,
             youtube: "",
@@ -155,7 +155,6 @@ window.gameData = {
     },
 
     getLeaderboard: function(topN = null) {
-        // Return a new sorted array, don't mutate original
         const sorted = [...this.leaderboard].sort((a, b) => b.points - a.points);
         return topN ? sorted.slice(0, topN) : sorted;
     },
